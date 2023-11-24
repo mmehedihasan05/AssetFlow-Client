@@ -8,11 +8,14 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 const Authentication_3rdParty = ({ actionName }) => {
     const { googleLogin, githubLogin } = useContext(AuthContext);
 
+    // TODO: google and github e register role set er jnno functional korte hbe.
     const handleUserCreate_3rdParty = (media) => {
         if (actionName === "login") {
-            return media("Logged in Successfully");
-        } else if (actionName === "register") {
-            return media("Registered Successfully");
+            return media("Logged in Successfully", "login");
+        } else if (actionName === "register_hr") {
+            return media("Registered Successfully", "register_hr");
+        } else if (actionName === "register_employee") {
+            return media("Registered Successfully", "register_employee");
         }
     };
 

@@ -46,6 +46,11 @@ const Register_HR = () => {
                     variant="outlined"
                     onChange={(event) => setCompanyName(event.target.value)}
                 />
+                <div className="flex gap-4 items-center py-4">
+                    <p>Company Logo: </p>
+
+                    <input type="file" name="" id="" />
+                </div>
                 <TextField
                     id="outlined-basic"
                     label="Email"
@@ -72,7 +77,6 @@ const Register_HR = () => {
                         label="Password"
                     />
                 </FormControl>
-
                 <div className="flex gap-4 items-center">
                     <p>Date of Birth: </p>
 
@@ -90,7 +94,7 @@ const Register_HR = () => {
                 <Button variant="contained">Sign Up</Button>
             </div>
 
-            <Authentication_3rdParty></Authentication_3rdParty>
+            <Authentication_3rdParty actionName="register_hr"></Authentication_3rdParty>
         </div>
     );
 };
