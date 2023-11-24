@@ -1,0 +1,110 @@
+npm create vite@latest a12-assetflow-client -- --template react
+
+npm create vite@latest my-react-app -- --template react
+npm install
+npm install react-router-dom
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+npm i -D daisyui@latest
+npm i react-icons
+npm install firebase
+npm i @tanstack/react-query
+npm i react-hot-toast
+npm i react-loader-spinner
+
+1.  Vite create
+    npm create vite@latest my-react-app -- --template react
+
+2.  npm install
+    npm install
+
+3.  npm router install
+    npm install react-router-dom localforage match-sorter sort-by
+
+4.  set env: { browser: true, node: true, es2020: true }, in .eslintrc.cjs
+
+5.  clean everything on src folder
+
+6.  tailwind install
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+
+    # add below in tailwind.config.js
+
+        content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+
+    # add some line index.css
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+7.  daisy ui install
+    npm i -D daisyui@latest
+
+    # add below line in tailwind.config.js
+
+        plugins: [require("daisyui")],
+
+8.  react helmet install
+    npm i react-helmet-async
+
+9.  props type install [Skip]
+    npm i prop-types
+
+10. react icons install
+    npm i react-icons
+
+11. Firebase install
+    npm install firebase
+
+12. add below lines in eslintrc.cjs file in rule property
+        "no-unused-vars": "off",
+        "react/prop-types": "off",
+        "no-unreachable": "off",
+    also add this.
+    env: { browser: true, node: true, es2020: true },
+
+
+13. Use axios for better api call.
+    npm install axios
+
+Icon Change + Title Change
+
+14. Install tanstack
+npm i @tanstack/react-query
+
+15. React hot toast
+npm i react-hot-toast
+
+16. React spinner
+npm i react-loader-spinner
+
+                    For Express
+01. Make folder
+mkdir folder_name
+
+02. npm init 
+or
+npm init -y
+
+03. npm install express
+04. npm install cors
+04. npm install mongodb 
+05. npm install dotenv
+06. npm install jsonwebtoken
+07. npm install nodemon
+08. npm install cookie-parser
+
+05. add
+        "start": "nodemon index.js",
+inside scripts in package.json
+-- nodemon use korle project save korle e auto restart hobe.
+
+run using `nodemon index.js` OR `npm start`
+
+** Generate Secret Key for jwt
+    require('crypto').randomBytes(64).toString("hex")
+
+// Before deploy to vercel
+const cookieOptions =  edit korte hbe.

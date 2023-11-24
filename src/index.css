@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+    --text-primary: #454360;
+    --text-secondary: #596172;
+    --text-highlight: #ff4c60;
+
+    --bg-white: #fff;
+    --bg-lite: #f9f9fe;
+
+    --banner-btn: #ff4c60;
+    --banner-primary: #fff;
+    --banner-secondary: #f9f9fe;
+
+    --btn-primary-bg: #4b4870;
+    --btn-primary-text: #fff;
+
+    --btn-secondary-bg: #ff4c60;
+    --btn-secondary-text: #fff;
+
+    -tw-ring-color: red;
+}
+
+#root {
+    background-color: var(--bg-lite);
+    min-height: 100vh;
+    color: var(--text-secondary);
+
+    font-family: "Inter", sans-serif;
+}
+
+.custom-width {
+    max-width: 1280px;
+    padding: 0.5rem 1rem;
+    margin: auto;
+}
+.custom-width-nospace {
+    padding: 0px;
+}
