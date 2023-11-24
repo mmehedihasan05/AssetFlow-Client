@@ -11,6 +11,8 @@ npm install firebase
 npm i @tanstack/react-query
 npm i react-hot-toast
 npm i react-loader-spinner
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
 
 1.  Vite create
     npm create vite@latest my-react-app -- --template react
@@ -80,6 +82,11 @@ npm i react-hot-toast
 16. React spinner
 npm i react-loader-spinner
 
+17. Mui install
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+
+
                     For Express
 01. Make folder
 mkdir folder_name
@@ -108,3 +115,4 @@ run using `nodemon index.js` OR `npm start`
 
 // Before deploy to vercel
 const cookieOptions =  edit korte hbe.
+

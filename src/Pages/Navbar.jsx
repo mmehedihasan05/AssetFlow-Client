@@ -65,7 +65,7 @@ const NavBar = () => {
         });
     };
 
-    currentNav = routes_hr;
+    // currentNav = routes_noUser;
 
     return (
         <div id="navbar" className="bg-white shadow-md ">
@@ -139,8 +139,8 @@ const NavBar = () => {
                                 <NavLink
                                     className={({ isActive, isPending }) =>
                                         isActive
-                                            ? ` text-[--text-highlight] border-b-2 border-[--text-highlight]`
-                                            : ` hover:text-[--text-highlight]`
+                                            ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
+                                            : ` hover:text-[--text-primary]`
                                     }
                                     to={route.path}
                                 >
@@ -163,7 +163,7 @@ const NavBar = () => {
                                 </div>
 
                                 <button
-                                    className="_btn  font-semibold hover:text-[--text-highlight] hidden"
+                                    className="_btn  font-semibold hover:text-[--text-primary] hidden"
                                     onClick={handleLogout}
                                     title="Logout"
                                 >
@@ -209,7 +209,7 @@ const NavBar = () => {
                         </div>
 
                         <button
-                            className="_btn  font-semibold hover:text-[--text-highlight] hidden"
+                            className="_btn  font-semibold hover:text-[--text-primary] hidden"
                             onClick={handleLogout}
                             title="Logout"
                         >
@@ -221,8 +221,8 @@ const NavBar = () => {
                         <NavLink
                             className={({ isActive, isPending }) =>
                                 isActive
-                                    ? ` text-[--text-highlight] border-b-2 border-[--text-highlight]`
-                                    : ` hover:text-[--text-highlight]`
+                                    ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
+                                    : ` hover:text-[--text-primary]`
                             }
                             to="/authentications"
                         >
@@ -231,8 +231,8 @@ const NavBar = () => {
                         <NavLink
                             className={({ isActive, isPending }) =>
                                 isActive
-                                    ? ` text-[--text-highlight] border-b-2 border-[--text-highlight]`
-                                    : ` hover:text-[--text-highlight]`
+                                    ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
+                                    : ` hover:text-[--text-primary]`
                             }
                             to="/register"
                         >
@@ -241,8 +241,8 @@ const NavBar = () => {
                         <NavLink
                             className={({ isActive, isPending }) =>
                                 isActive
-                                    ? ` text-[--text-highlight] border-b-2 border-[--text-highlight]`
-                                    : ` hover:text-[--text-highlight]`
+                                    ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
+                                    : ` hover:text-[--text-primary]`
                             }
                             to="/login"
                         >

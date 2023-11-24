@@ -12,6 +12,9 @@ import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "react-hot-toast";
 
 import AuthProvider from "./AuthProvider";
+import Login from "./Pages/Login";
+import Register_Employee from "./Pages/Register_Employee";
+import Register_HR from "./Pages/Register_HR";
 
 const queryClient = new QueryClient();
 
@@ -21,8 +24,11 @@ const router = createBrowserRouter([
         element: <Root></Root>,
         errorElement: <ErrorPage />,
         children: [
-            { path: "/", loader: () => fetch("/servicesData.json"), element: <Home /> },
-            { path: "", loader: () => fetch(""), element: "" },
+            { path: "/", element: <Home /> },
+
+            { path: "/register_employee", element: <Register_Employee></Register_Employee> },
+            { path: "/register_hr", element: <Register_HR></Register_HR> },
+            { path: "/login", element: <Login></Login> },
         ],
     },
 ]);

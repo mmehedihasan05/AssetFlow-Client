@@ -86,7 +86,7 @@ const AuthProvider = ({ children }) => {
 
                     // user entry
                     let registerRes = await axiosSecure
-                        .post(`/adduser`, userInfoExtract(userCredential.user))
+                        .post(`/createuser`, userInfoExtract(userCredential.user))
                         .then((response) => {
                             return response.data;
                         })
@@ -110,13 +110,15 @@ const AuthProvider = ({ children }) => {
 
     // Register or Login using Google
     const googleLogin = (successMsg) => {
+        console.log("hiii");
+
         return toast.promise(
             signInWithPopup(auth, googleProvider)
                 .then(async (userCredential) => {
                     // User authenticated
 
                     let registerRes = await axiosSecure
-                        .post(`/adduser`, userInfoExtract(userCredential.user))
+                        .post(`/createuser`, userInfoExtract(userCredential.user))
                         .then((response) => {
                             return response.data;
                         })
@@ -147,7 +149,7 @@ const AuthProvider = ({ children }) => {
                 .then(async (userCredential) => {
                     // user entry
                     let registerRes = await axiosSecure
-                        .post(`/adduser`, userInfoExtract(userCredential.user))
+                        .post(`/createuser`, userInfoExtract(userCredential.user))
                         .then((response) => {
                             return response.data;
                         })
