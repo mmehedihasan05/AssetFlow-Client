@@ -8,8 +8,11 @@ import "swiper/css/navigation";
 import "../../CssStyles/Banner.css";
 import { Pagination, Navigation } from "swiper/modules";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="banner_ custom-width">
             <Swiper
@@ -50,7 +53,12 @@ const Banner = () => {
                                         professional and play a crucial role in building a vibrant
                                         and inclusive workplace.
                                     </p>
-                                    <Button variant="contained">Join As Employee</Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => navigate("/register_hr")}
+                                    >
+                                        Join As HR
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +83,12 @@ const Banner = () => {
                                         Unlock opportunities and be a part of our dynamic team. Join
                                         to contribute your skills and grow together.
                                     </p>
-                                    <Button variant="contained">Join As Employee</Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => navigate("/register_employee")}
+                                    >
+                                        Join As Employee
+                                    </Button>
                                 </div>
                             </div>
                         </div>

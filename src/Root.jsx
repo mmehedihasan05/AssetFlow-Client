@@ -3,6 +3,7 @@ import { createContext, useContext } from "react";
 import useAxiosSecure from "./hooks/useAxiosSecure";
 import { AuthContext } from "./AuthProvider";
 import NavBar from "./Pages/Navbar";
+import Footer from "./Pages/Home/Footer";
 
 export const OtherContext = createContext();
 
@@ -21,6 +22,9 @@ const Root = () => {
                     </div>
                     <div>
                         <Outlet></Outlet>
+                    </div>
+                    <div className="mt-auto">
+                        <Footer></Footer>
                     </div>
                 </div>
             </OtherContext.Provider>

@@ -12,7 +12,7 @@ const SectionTitle = ({ data }) => {
                 <h1 className="text-primary sectionHeading text-3xl md:text-4xl font-semibold text-[--text-primary]">
                     {title}
                 </h1>
-                <div className="">{description}</div>
+                <div className="text-[--text-secondary]">{description}</div>
             </div>
             {noBorder ? (
                 ""

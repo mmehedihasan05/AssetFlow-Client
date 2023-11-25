@@ -102,11 +102,15 @@ npm init -y
 06. npm install jsonwebtoken
 07. npm install nodemon
 08. npm install cookie-parser
+09. npm i stripe
 
 05. add
         "start": "nodemon index.js",
 inside scripts in package.json
 -- nodemon use korle project save korle e auto restart hobe.
+    add
+    "type": "module",
+inside package.json object.
 
 run using `nodemon index.js` OR `npm start`
 
