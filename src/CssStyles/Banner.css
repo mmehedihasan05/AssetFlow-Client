@@ -1,0 +1,56 @@
+.banner_ .swiper {
+    height: 80vh;
+}
+
+.banner_ .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: transparent;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner_ .swiper-slide .banner-image-container {
+    background-size: cover;
+}
+
+.banner_ .swiper-slide .banner-image-overlay {
+    background-color: #06396d;
+    opacity: 0.3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.banner_ .swiper {
+    margin-left: auto;
+    margin-right: auto;
+}
+.banner_ .swiper-button-prev,
+.banner_ .swiper-button-next {
+    color: var(--text-primary);
+}
+.swiper-pagination-bullet-active {
+    background: var(--text-primary);
+}
+
+@media only screen and (max-width: 426px) {
+    .banner_ .swiper {
+        height: 50vh;
+    }
+
+    .banner_ .swiper-button-prev,
+    .banner_ .swiper-button-next {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 321px) {
+    .banner_ .swiper {
+        height: 35vh;
+    }
+}

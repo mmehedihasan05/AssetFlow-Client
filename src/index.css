@@ -7,14 +7,9 @@
 #root {
     --text-primary: #1976d2;
     --text-secondary: #596172;
-    --text-highlight: #ff4c60;
 
     --bg-white: #fff;
     --bg-lite: #f9f9fe;
-
-    --banner-btn: #ff4c60;
-    --banner-primary: #fff;
-    --banner-secondary: #f9f9fe;
 
     --btn-primary-bg: #4b4870;
     --btn-primary-text: #fff;

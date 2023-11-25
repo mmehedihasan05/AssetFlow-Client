@@ -65,7 +65,7 @@ const NavBar = () => {
 
     // currentNav = routes_employee;
     // currentNav = routes_hr;
-
+    // currentUser = true;
     return (
         <div id="navbar" className="bg-white shadow-md ">
             <div
