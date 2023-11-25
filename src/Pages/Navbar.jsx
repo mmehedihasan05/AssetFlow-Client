@@ -9,8 +9,7 @@ import { GrLogout } from "react-icons/gr";
 import "../CssStyles/Navbar.css";
 
 const NavBar = () => {
-    const { logout, currentUser } = useContext(AuthContext);
-
+    let { logout, currentUser } = useContext(AuthContext);
     const [navItem_dropdownShow, setNavItem_dropdownShow] = useState(false);
     const [profileItem_dropdownShow, setProfileItem_dropdownShow] = useState(false);
 
@@ -30,20 +29,19 @@ const NavBar = () => {
     ];
     const routes_employee = [
         { path: "/", name: "Home" },
-        { path: "/my_team", name: "My Team" },
         { path: "/my_assets", name: "My Assets" },
+        { path: "/my_team", name: "My Team" },
         { path: "/request_for_asset", name: "Request for an Asset" },
         { path: "/make_custom_request", name: "Make a Custom Request" },
-        { path: "/profile", name: "Profile" },
     ];
     const routes_hr = [
         { path: "/", name: "Home" },
-        { path: "/my_employee_list", name: "My Employee List" },
-        { path: "/add_employee", name: "Add an Employee" },
         { path: "/asset_list", name: "Asset List" },
         { path: "/add_asset", name: "Add an Asset" },
         { path: "/all_requests", name: "All Requests" },
         { path: "/custom_requests_list", name: "Custom Requests List" },
+        { path: "/my_employee_list", name: "My Employee List" },
+        { path: "/add_employee", name: "Add an Employee" },
     ];
 
     let currentNav =
@@ -65,7 +63,8 @@ const NavBar = () => {
         });
     };
 
-    // currentNav = routes_noUser;
+    // currentNav = routes_employee;
+    // currentNav = routes_hr;
 
     return (
         <div id="navbar" className="bg-white shadow-md ">
@@ -94,6 +93,87 @@ const NavBar = () => {
                             <img className="w-[220px]" src="/Logo-bg-blue.png" alt="" />
                         </NavLink>
                     </div>
+
+                    {/* profile informations */}
+                    <div className="block lg:hidden">
+                        <div onClick={handleProfileDropdown} className="">
+                            <img
+                                src={currentUser?.photoURL || "/no_user.png"}
+                                className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                                outline outline-1  outline-offset-1
+                                cursor-pointer"
+                                title={currentUser?.displayName}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Items + Profile Informations
+                    For Large device */}
+                <div
+                    className={
+                        currentUser
+                            ? `hidden lg:flex items-center justify-between w-full`
+                            : `hidden lg:flex items-center justify-center w-full`
+                    }
+                >
+                    {/* Menu Items */}
+                    <div>
+                        <ul className="flex px-1 gap-x-6 gap-y-2 font-semibold">
+                            {currentNav.map((route, idx) => (
+                                <li key={idx}>
+                                    <NavLink
+                                        className={({ isActive, isPending }) =>
+                                            isActive
+                                                ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
+                                                : ` hover:text-[--text-primary]`
+                                        }
+                                        to={route.path}
+                                    >
+                                        {route.name}
+                                    </NavLink>
+                                </li>
+                            ))}
+
+                            {/* TODO: Just logout thakbe and employee hole image o thakbe. */}
+                            {currentUser?.email && (
+                                <div className="flex gap-2 justify-center items-center">
+                                    <div onClick={handleProfileDropdown} className=" hidden">
+                                        <img
+                                            src={currentUser?.photoURL || "/no_user.png"}
+                                            className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                                outline outline-1  outline-offset-1
+                                cursor-pointer"
+                                            title={currentUser?.displayName}
+                                        />
+                                    </div>
+
+                                    <button
+                                        className="_btn  font-semibold hover:text-[--text-primary] hidden"
+                                        onClick={handleLogout}
+                                        title="Logout"
+                                    >
+                                        <GrLogout></GrLogout>
+                                    </button>
+                                </div>
+                            )}
+                        </ul>
+                    </div>
+
+                    {/* Profile Informations */}
+                    {currentUser && (
+                        <div>
+                            <div onClick={handleProfileDropdown} className="">
+                                <img
+                                    src={currentUser?.photoURL || "/no_user.png"}
+                                    className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                                outline outline-1  outline-offset-1
+                                cursor-pointer"
+                                    title={currentUser?.displayName}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Dropdown Main Items 
@@ -130,47 +210,55 @@ const NavBar = () => {
                     </ul>
                 </div>
 
-                {/* Middle Items
-                    For Large device */}
-                <div className="hidden lg:block">
-                    <ul className="flex px-1 gap-x-6 gap-y-2 font-semibold flex-wrap justify-center items-center">
-                        {currentNav.map((route, idx) => (
-                            <li key={idx}>
-                                <NavLink
-                                    className={({ isActive, isPending }) =>
-                                        isActive
-                                            ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
-                                            : ` hover:text-[--text-primary]`
-                                    }
-                                    to={route.path}
-                                >
-                                    {route.name}
-                                </NavLink>
-                            </li>
-                        ))}
+                {/* Dropdown User Info and Dashboard
+                    For Mobile and Tab 
+                    profileItem_dropdownShow && currentUser => eta na dile logout er poreo dropdown theke jay
+                    */}
+                <div
+                    className={
+                        profileItem_dropdownShow && currentUser
+                            ? `dropdown dropdown_profileItems show
+                            bg-white shadow-lg rounded-sm z-10`
+                            : `dropdown dropdown_profileItems hide
+                            bg-white shadow-lg rounded-sm z-10`
+                    }
+                >
+                    {/* up arrow */}
+                    <div className="arrowOnNav"></div>
 
-                        {/* TODO: Just logout thakbe and employee hole image o thakbe. */}
-                        {currentUser?.email && (
-                            <div className="flex gap-2 justify-center items-center">
-                                <div onClick={handleProfileDropdown} className=" hidden">
-                                    <img
-                                        src={currentUser?.photoURL || "/no_user.png"}
-                                        className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                    {/* Dropdown Menu Data */}
+                    <ul className="flex flex-col px-6 py-4 gap-6 justify-center font-semibold">
+                        {/* User image, name, role */}
+                        <li className="flex gap-4 items-center">
+                            <img
+                                src={currentUser?.photoURL || "/no_user.png"}
+                                className="h-[24px] w-[24px] md:h-[40px] md:w-[40px] rounded-full 
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
-                                        title={currentUser?.displayName}
-                                    />
-                                </div>
+                                title={currentUser?.displayName}
+                            />
+                            <div className="font-bold text-lg">{currentUser?.displayName}</div>
+                        </li>
+                        <li>
+                            <NavLink
+                                className={({ isActive, isPending }) =>
+                                    isActive
+                                        ? ` text-[--text-highlight] border-b-2 border-[--text-highlight]`
+                                        : ` hover:text-[--text-highlight]`
+                                }
+                                to="/profile"
+                            >
+                                Profile
+                            </NavLink>
+                        </li>
 
-                                <button
-                                    className="_btn  font-semibold hover:text-[--text-primary] hidden"
-                                    onClick={handleLogout}
-                                    title="Logout"
-                                >
-                                    <GrLogout></GrLogout>
-                                </button>
-                            </div>
-                        )}
+                        {/* Logout */}
+                        <li
+                            onClick={handleLogout}
+                            className=" font-semibold hover:text-[--text-highlight] cursor-pointer"
+                        >
+                            Logout
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -193,64 +281,6 @@ const NavBar = () => {
                     setProfileItem_dropdownShow(false);
                 }}
             ></div>
-
-            {/* Last Items : Login/Profile items  HIDDEN */}
-            <div className="hidden">
-                {currentUser?.email ? (
-                    <div className="flex gap-2 justify-center items-center">
-                        <div onClick={handleProfileDropdown} className="">
-                            <img
-                                src={currentUser?.photoURL || "/no_user.png"}
-                                className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
-                                outline outline-1  outline-offset-1
-                                cursor-pointer"
-                                title={currentUser?.displayName}
-                            />
-                        </div>
-
-                        <button
-                            className="_btn  font-semibold hover:text-[--text-primary] hidden"
-                            onClick={handleLogout}
-                            title="Logout"
-                        >
-                            <GrLogout></GrLogout>
-                        </button>
-                    </div>
-                ) : (
-                    <div className="flex px-1 gap-2 text-sm md:text-base md:gap-6 justify-center font-semibold">
-                        <NavLink
-                            className={({ isActive, isPending }) =>
-                                isActive
-                                    ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
-                                    : ` hover:text-[--text-primary]`
-                            }
-                            to="/authentications"
-                        >
-                            Authentications
-                        </NavLink>
-                        <NavLink
-                            className={({ isActive, isPending }) =>
-                                isActive
-                                    ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
-                                    : ` hover:text-[--text-primary]`
-                            }
-                            to="/register"
-                        >
-                            Register
-                        </NavLink>
-                        <NavLink
-                            className={({ isActive, isPending }) =>
-                                isActive
-                                    ? ` text-[--text-primary] border-b-2 border-[--text-primary]`
-                                    : ` hover:text-[--text-primary]`
-                            }
-                            to="/login"
-                        >
-                            Login
-                        </NavLink>
-                    </div>
-                )}
-            </div>
         </div>
     );
 };

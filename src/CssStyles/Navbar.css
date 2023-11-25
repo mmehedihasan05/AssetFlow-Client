@@ -2,7 +2,7 @@
 #navbar .dropdown {
     transition: all 0.25s;
     position: absolute;
-    top: 62px;
+    top: 103px;
     min-width: 220px;
     max-width: 320px;
     border-radius: 4px;
@@ -45,7 +45,7 @@
 
 /* UserProfileItems Drowdown */
 #navbar .dropdown_profileItems {
-    right: 12px;
+    right: 16px;
 }
 
 #navbar .dropdown_profileItems.show {
@@ -81,4 +81,9 @@
     height: 0;
     width: 0;
     opacity: 0;
+}
+@media only screen and (max-width: 769px) {
+    #navbar .dropdown {
+        top: 53px;
+    }
 }
