@@ -40,7 +40,7 @@ const Login = () => {
             userEmail: emailInput,
             userPassword: passwordInput,
         };
-
+        console.log(data);
         login(data);
     };
 
@@ -80,6 +80,7 @@ const Login = () => {
                             </InputAdornment>
                         }
                         label="Password"
+                        onChange={(event) => setPasswordInput(event.target.value)}
                     />
                 </FormControl>
 

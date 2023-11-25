@@ -29,6 +29,7 @@ const githubProvider = new GithubAuthProvider();
 const AuthProvider = ({ children }) => {
     const [errorState, setErrorState] = useState();
     const [currentUser, setCurrentUser] = useState();
+    const [currentUserInfo, setCurrentUserInfo] = useState();
     const [loading, setLoading] = useState(true);
     const [purchases, setPurchases] = useState([]);
     const [theme, setTheme] = useState(localStorage.getItem("current-theme") || "dark");
@@ -60,39 +61,66 @@ const AuthProvider = ({ children }) => {
     function userInfoExtract(userCredential) {
         return {
             userInfo: {
-                photoURL: userCredential?.photoURL,
-                displayName: userCredential?.displayName,
+                // photoURL: userCredential?.photoURL,
+                // displayName: userCredential?.displayName,
                 email: userCredential?.email,
-                emailVerified: userCredential?.emailVerified,
-                creationTime: userCredential?.creationTime,
+                // emailVerified: userCredential?.emailVerified,
+                // creationTime: userCredential?.creationTime,
                 uid: userCredential?.uid,
-                providerId: userCredential?.providerData[0]?.providerId,
+                // providerId: userCredential?.providerData[0]?.providerId,
             },
         };
     }
 
     // Create User || Register Page
-    const userCreate = ({ userFullName, userProfileImageUrl, userEmail, userPassword }) => {
+    const userCreate = async (signUpInformation) => {
+        const {
+            userFullName,
+            userEmail,
+            userPassword,
+            userDob,
+            userRole,
+            userImage,
+            userCompanyLogo,
+            userCompanyName,
+        } = signUpInformation;
+
         return toast.promise(
             createUserWithEmailAndPassword(auth, userEmail, userPassword)
                 .then(async (userCredential) => {
-                    //
-                    await updateProfile(auth.currentUser, {
-                        displayName: userFullName,
-                        photoURL: userProfileImageUrl,
-                    });
-                    //
-                    console.log("from manual register", userCredential);
+                    const userInformation = {
+                        userFullName,
+                        userEmail,
+                        userDob,
+                        userRole,
+                        userImage,
+                        userCompanyLogo,
+                        userCompanyName,
+                        userId: userCredential?.uid,
+
+                        currentWorkingCompanyEmail: null,
+                        currentWorkingCompanyImage: null,
+                        currentWorkingCompanyName: null,
+                        currentMemberShipLimit: 0,
+                        currentEmployees: [],
+                    };
 
                     // user entry
                     let registerRes = await axiosSecure
-                        .post(`/createuser`, userInfoExtract(userCredential.user))
+                        .post(`/createuser`, userInformation)
                         .then((response) => {
                             return response.data;
                         })
                         .catch((error) => {
                             console.log("error from userRegister", error);
                         });
+
+                    console.log("Server Response ", registerRes);
+
+                    if (registerRes?.userInsertResult?.acknowledged) {
+                        setCurrentUserInfo(registerRes?.userInformation);
+                        setLoading(false);
+                    }
 
                     return userCredential.user;
                 })
@@ -218,26 +246,25 @@ const AuthProvider = ({ children }) => {
             const email = user?.email;
             const userId = user?.uid;
 
-            console.log(user);
             if (email) {
                 // Setting cookies and checking cookies
                 axiosSecure
                     .post(`/authenticate`, { email, userId })
                     .then((response) => {
-                        console.log("JWT || Authentication Success", response);
+                        console.log("JWT || Authentication Success", response.data);
 
-                        // admin role checking
-                        axiosSecure
-                            .get(`/role-check?email=${email}&userId=${userId}`)
-                            .then((res) => {
-                                console.log("res from admin chk", res.data);
-                                setIsAdmin(res.data.isAdmin);
-                                setCurrentUser(user);
-                                setLoading(false);
-                            })
-                            .catch((err) =>
-                                console.log("error from authprovider/admin role check")
-                            );
+                        /*
+                        User register er pore ota firebase e authenticate er pore ota abar mongo te save kori. But oita save hoye reponse ashar agy e e createUserWithEmailAndPassword execute hoye auth change hoye jay and tokhn setloading false hoy and setcurretnuserinfo null theke jay. 
+                        erkm hole ui show te jhamela korbe. tai eta pause kore disi.
+
+                        mongo theke userinfo ashle e loading false hbe.
+                        */
+
+                        setCurrentUser(user);
+                        if (email && response.data?.userInformation) {
+                            setCurrentUserInfo(response.data?.userInformation);
+                            setLoading(false);
+                        }
                     })
                     .catch((jwt_Error) => {
                         console.log(
@@ -247,6 +274,7 @@ const AuthProvider = ({ children }) => {
                         );
                     });
             } else {
+                setCurrentUserInfo({});
                 setCurrentUser(user);
                 setLoading(false);
             }
@@ -274,6 +302,7 @@ const AuthProvider = ({ children }) => {
         setTheme,
 
         isAdmin,
+        currentUserInfo,
     };
 
     if (loading) {

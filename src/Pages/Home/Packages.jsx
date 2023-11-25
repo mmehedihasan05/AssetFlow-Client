@@ -5,19 +5,11 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import usePackages from "../../hooks/usePackages";
 
 const Packages = () => {
-    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
-
-    const { data: packages = [] } = useQuery({
-        queryKey: ["packages"],
-        queryFn: async () => {
-            const res = await axiosSecure.get("/packages");
-            return res.data;
-        },
-    });
-    console.log(packages);
+    let [packages] = usePackages();
 
     return (
         <div className="custom-width bg-white space-y-4">
@@ -32,7 +24,7 @@ const Packages = () => {
                     <div key={idx} className="shadow-md flex flex-col rounded-md space-y-4 pb-4">
                         <img src={Package.image} className="rounded-t-md" alt="" />
                         <div className="flex-auto p-4 space-y-2">
-                            <h2 className="text-2xl font-semibold">{Package.title}</h2>
+                            <h2 className="text-2xl font-semibold">{Package.label}</h2>
                             <p>{Package.description}</p>
                         </div>
 

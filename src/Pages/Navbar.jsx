@@ -9,7 +9,7 @@ import { GrLogout } from "react-icons/gr";
 import "../CssStyles/Navbar.css";
 
 const NavBar = () => {
-    let { logout, currentUser } = useContext(AuthContext);
+    let { logout, currentUser, currentUserInfo } = useContext(AuthContext);
     const [navItem_dropdownShow, setNavItem_dropdownShow] = useState(false);
     const [profileItem_dropdownShow, setProfileItem_dropdownShow] = useState(false);
 
@@ -45,9 +45,9 @@ const NavBar = () => {
     ];
 
     let currentNav =
-        currentUser?.role === "employee"
+        currentUserInfo?.userRole === "employee"
             ? routes_employee
-            : currentUser?.role === "hr"
+            : currentUserInfo?.userRole === "hr"
             ? routes_hr
             : routes_noUser;
 
@@ -64,7 +64,7 @@ const NavBar = () => {
     };
 
     // currentNav = routes_employee;
-    // currentNav = routes_hr;
+    // currentNav = currentUser ? routes_hr : routes_noUser;
     // currentUser = true;
     return (
         <div id="navbar" className="bg-white shadow-md ">
@@ -95,24 +95,26 @@ const NavBar = () => {
                     </div>
 
                     {/* profile informations */}
-                    <div className="block lg:hidden">
-                        <div onClick={handleProfileDropdown} className="">
-                            <img
-                                src={currentUser?.photoURL || "/no_user.png"}
-                                className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                    {currentUserInfo?.userEmail && (
+                        <div className="block lg:hidden">
+                            <div onClick={handleProfileDropdown} className="">
+                                <img
+                                    src={currentUserInfo?.userImage || "/no_user.png"}
+                                    className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
-                                title={currentUser?.displayName}
-                            />
+                                    title={currentUserInfo?.userFullName}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Main Items + Profile Informations
                     For Large device */}
                 <div
                     className={
-                        currentUser
+                        currentUserInfo?.userEmail
                             ? `hidden lg:flex items-center justify-between w-full`
                             : `hidden lg:flex items-center justify-center w-full`
                     }
@@ -136,15 +138,15 @@ const NavBar = () => {
                             ))}
 
                             {/* TODO: Just logout thakbe and employee hole image o thakbe. */}
-                            {currentUser?.email && (
+                            {currentUserInfo?.userEmail && (
                                 <div className="flex gap-2 justify-center items-center">
                                     <div onClick={handleProfileDropdown} className=" hidden">
                                         <img
-                                            src={currentUser?.photoURL || "/no_user.png"}
+                                            src={currentUserInfo?.userImage || "/no_user.png"}
                                             className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
-                                            title={currentUser?.displayName}
+                                            title={currentUserInfo?.userFullName}
                                         />
                                     </div>
 
@@ -161,15 +163,15 @@ const NavBar = () => {
                     </div>
 
                     {/* Profile Informations */}
-                    {currentUser && (
+                    {currentUserInfo?.userEmail && (
                         <div>
                             <div onClick={handleProfileDropdown} className="">
                                 <img
-                                    src={currentUser?.photoURL || "/no_user.png"}
+                                    src={currentUserInfo?.userImage || "/no_user.png"}
                                     className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
-                                    title={currentUser?.displayName}
+                                    title={currentUserInfo?.userFullName}
                                 />
                             </div>
                         </div>
@@ -216,7 +218,7 @@ const NavBar = () => {
                     */}
                 <div
                     className={
-                        profileItem_dropdownShow && currentUser
+                        profileItem_dropdownShow && currentUserInfo?.userEmail
                             ? `dropdown dropdown_profileItems show
                             bg-white shadow-lg rounded-sm z-10`
                             : `dropdown dropdown_profileItems hide
@@ -231,13 +233,13 @@ const NavBar = () => {
                         {/* User image, name, role */}
                         <li className="flex gap-4 items-center">
                             <img
-                                src={currentUser?.photoURL || "/no_user.png"}
+                                src={currentUserInfo?.userImage || "/no_user.png"}
                                 className="h-[24px] w-[24px] md:h-[40px] md:w-[40px] rounded-full 
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
-                                title={currentUser?.displayName}
+                                title={currentUserInfo?.userFullName}
                             />
-                            <div className="font-bold text-lg">{currentUser?.displayName}</div>
+                            <div className="font-bold text-lg">{currentUserInfo?.userFullName}</div>
                         </li>
                         <li>
                             <NavLink
@@ -272,7 +274,7 @@ const NavBar = () => {
             <div
                 id="fullScreenOverlay"
                 className={
-                    (navItem_dropdownShow || profileItem_dropdownShow) && currentUser
+                    (navItem_dropdownShow || profileItem_dropdownShow) && currentUserInfo?.userEmail
                         ? `show`
                         : `hide`
                 }
