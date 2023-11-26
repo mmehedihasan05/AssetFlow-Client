@@ -88,6 +88,7 @@ const AuthProvider = ({ children }) => {
         return toast.promise(
             createUserWithEmailAndPassword(auth, userEmail, userPassword)
                 .then(async (userCredential) => {
+                    console.log(userCredential);
                     const userInformation = {
                         userFullName,
                         userEmail,
@@ -96,14 +97,10 @@ const AuthProvider = ({ children }) => {
                         userImage,
                         userCompanyLogo,
                         userCompanyName,
-                        userId: userCredential?.uid,
-
-                        currentWorkingCompanyEmail: null,
-                        currentWorkingCompanyImage: null,
-                        currentWorkingCompanyName: null,
-                        currentMemberShipLimit: 0,
-                        currentEmployees: [],
+                        userId: userCredential?.user?.uid,
+                        userSignUpMethod: "email_pass",
                     };
+                    console.log("info to post ", userInformation);
 
                     // user entry
                     let registerRes = await axiosSecure
@@ -117,7 +114,10 @@ const AuthProvider = ({ children }) => {
 
                     console.log("Server Response ", registerRes);
 
-                    if (registerRes?.userInsertResult?.acknowledged) {
+                    if (
+                        registerRes?.userInsertResult?.acknowledged ||
+                        registerRes?.userInsertResult?.userExists
+                    ) {
                         setCurrentUserInfo(registerRes?.userInformation);
                         setLoading(false);
                     }
@@ -137,16 +137,29 @@ const AuthProvider = ({ children }) => {
     };
 
     // Register or Login using Google
-    const googleLogin = (successMsg) => {
-        console.log("hiii");
-
+    const googleLogin = ({ successMsg, method }) => {
         return toast.promise(
             signInWithPopup(auth, googleProvider)
                 .then(async (userCredential) => {
                     // User authenticated
+                    let userInfoFirebase = userCredential.user;
 
+                    let userInformation = {
+                        userFullName: userInfoFirebase?.displayName,
+                        userEmail: userInfoFirebase?.email,
+                        userDob: null,
+                        userRole: "employee",
+                        userImage: userInfoFirebase?.photoURL,
+                        userCompanyLogo: null,
+                        userCompanyName: null,
+                        userId: userInfoFirebase?.uid,
+                        userSignUpMethod: userCredential.providerId,
+                    };
+
+                    // jodi userInformation e email thake tar mane eta
+                    // user entry
                     let registerRes = await axiosSecure
-                        .post(`/createuser`, userInfoExtract(userCredential.user))
+                        .post(`/createuser`, userInformation)
                         .then((response) => {
                             return response.data;
                         })
@@ -154,7 +167,13 @@ const AuthProvider = ({ children }) => {
                             console.log("error from userRegister", error);
                         });
 
-                    // registerRes
+                    if (
+                        registerRes?.userInsertResult?.acknowledged ||
+                        registerRes?.userInsertResult?.userExists
+                    ) {
+                        setCurrentUserInfo(registerRes?.userInformation);
+                        setLoading(false);
+                    }
 
                     return userCredential.user;
                 })
@@ -164,35 +183,6 @@ const AuthProvider = ({ children }) => {
                 }),
             {
                 loading: "Authenticating Using Google...",
-                success: (user) => <b>{successMsg}</b>,
-                error: (error) => <b>{error}</b>,
-            }
-        );
-    };
-
-    // Register or Login using Github
-    const githubLogin = (successMsg) => {
-        return toast.promise(
-            signInWithPopup(auth, githubProvider)
-                .then(async (userCredential) => {
-                    // user entry
-                    let registerRes = await axiosSecure
-                        .post(`/createuser`, userInfoExtract(userCredential.user))
-                        .then((response) => {
-                            return response.data;
-                        })
-                        .catch((error) => {
-                            console.log("error from userRegister", error);
-                        });
-
-                    return userCredential.user;
-                })
-                .catch((error) => {
-                    const formattedError = errorMsgFormatter(error.code);
-                    throw formattedError;
-                }),
-            {
-                loading: "Authenticating Using Github...",
                 success: (user) => <b>{successMsg}</b>,
                 error: (error) => <b>{error}</b>,
             }
@@ -289,7 +279,6 @@ const AuthProvider = ({ children }) => {
         userCreate,
         login,
         googleLogin,
-        githubLogin,
         logout,
         errorState,
         setErrorState,
@@ -306,6 +295,7 @@ const AuthProvider = ({ children }) => {
     };
 
     if (loading) {
+        // logout();
         return <Loading />;
     }
 

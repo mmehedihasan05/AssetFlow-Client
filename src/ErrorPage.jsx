@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useNavigate, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
@@ -31,9 +32,9 @@ export default function ErrorPage() {
                 </i>
             </p>
 
-            <button onClick={() => Navigate("/")} className="btn custom-primary-btn ">
+            <Button variant="contained" color="error" onClick={() => Navigate("/")}>
                 Go Home
-            </button>
+            </Button>
         </div>
     );
 }

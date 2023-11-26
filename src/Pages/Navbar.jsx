@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
@@ -9,17 +9,51 @@ import { GrLogout } from "react-icons/gr";
 import "../CssStyles/Navbar.css";
 
 const NavBar = () => {
-    let { logout, currentUser, currentUserInfo } = useContext(AuthContext);
+    let { logout, currentUserInfo } = useContext(AuthContext);
     const [navItem_dropdownShow, setNavItem_dropdownShow] = useState(false);
     const [profileItem_dropdownShow, setProfileItem_dropdownShow] = useState(false);
+    const [currentLogo, setCurrentLogo] = useState(
+        <img className="max-w-[220px] max-h-[42px] w-auto h-auto" src="/Logo-bg-blue.png" alt="" />
+    );
 
-    const handleNavItemDropdown = () => {
-        setNavItem_dropdownShow(!navItem_dropdownShow);
-    };
+    const handleNavItemDropdown = () => setNavItem_dropdownShow(!navItem_dropdownShow);
+    const handleProfileDropdown = () => setProfileItem_dropdownShow(!profileItem_dropdownShow);
 
-    const handleProfileDropdown = () => {
-        setProfileItem_dropdownShow(!profileItem_dropdownShow);
-    };
+    useEffect(() => {
+        console.log("Current user Navbar", currentUserInfo);
+        if (
+            currentUserInfo?.userRole === "employee" &&
+            currentUserInfo?.currentWorkingCompanyImage
+        ) {
+            setCurrentLogo(
+                <img
+                    className="max-w-[220px] max-h-[42px] w-auto h-auto"
+                    src={currentUserInfo.currentWorkingCompanyImage}
+                />
+            );
+        } else if (currentUserInfo?.userRole === "hr" && currentUserInfo?.userCompanyLogo) {
+            setCurrentLogo(
+                <img
+                    className="max-w-[220px] max-h-[42px] w-auto h-auto"
+                    src={currentUserInfo.userCompanyLogo}
+                />
+            );
+        } else {
+            setCurrentLogo(
+                <img
+                    className="max-w-[220px] max-h-[42px] w-auto h-auto"
+                    src="/Logo-bg-blue.png"
+                    alt=""
+                />
+            );
+        }
+
+        // drop down theke logout er pore login dile drop down auto open thake. tai off korlam.
+        if (!currentUserInfo?.email) {
+            setNavItem_dropdownShow(false);
+            setProfileItem_dropdownShow(false);
+        }
+    }, [currentUserInfo]);
 
     const routes_noUser = [
         { path: "/", name: "Home" },
@@ -89,9 +123,7 @@ const NavBar = () => {
 
                     {/* Brand Logo */}
                     <div className="mx-auto lg:mx-0">
-                        <NavLink to="/">
-                            <img className="w-[220px]" src="/Logo-bg-blue.png" alt="" />
-                        </NavLink>
+                        <NavLink to="/">{currentLogo}</NavLink>
                     </div>
 
                     {/* profile informations */}
@@ -100,7 +132,7 @@ const NavBar = () => {
                             <div onClick={handleProfileDropdown} className="">
                                 <img
                                     src={currentUserInfo?.userImage || "/no_user.png"}
-                                    className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                                    className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full object-cover
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
                                     title={currentUserInfo?.userFullName}
@@ -143,7 +175,7 @@ const NavBar = () => {
                                     <div onClick={handleProfileDropdown} className=" hidden">
                                         <img
                                             src={currentUserInfo?.userImage || "/no_user.png"}
-                                            className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full 
+                                            className="h-[24px] w-[24px] md:h-[36px] md:w-[36px] rounded-full object-cover
                                 outline outline-1  outline-offset-1
                                 cursor-pointer"
                                             title={currentUserInfo?.userFullName}
@@ -239,7 +271,14 @@ const NavBar = () => {
                                 cursor-pointer"
                                 title={currentUserInfo?.userFullName}
                             />
-                            <div className="font-bold text-lg">{currentUserInfo?.userFullName}</div>
+                            <div className="overflow-x-auto">
+                                <div className="font-bold text-lg">
+                                    {currentUserInfo?.userFullName}
+                                </div>
+                                <div className="text-base font-medium">
+                                    {currentUserInfo?.userEmail}
+                                </div>
+                            </div>
                         </li>
                         <li>
                             <NavLink

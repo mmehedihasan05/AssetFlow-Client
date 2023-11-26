@@ -6,16 +6,14 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Authentication_3rdParty = ({ actionName }) => {
-    const { googleLogin, githubLogin } = useContext(AuthContext);
+    const { googleLogin } = useContext(AuthContext);
 
     // TODO: google and github e register role set er jnno functional korte hbe.
     const handleUserCreate_3rdParty = (media) => {
         if (actionName === "login") {
-            return media("Logged in Successfully", "login");
-        } else if (actionName === "register_hr") {
-            return media("Registered Successfully", "register_hr");
+            return media({ successMsg: "Logged in Successfully", method: "login" });
         } else if (actionName === "register_employee") {
-            return media("Registered Successfully", "register_employee");
+            return media({ successMsg: "Registered Successfully", method: "register_employee" });
         }
     };
 
@@ -37,15 +35,6 @@ const Authentication_3rdParty = ({ actionName }) => {
                     onClick={() => handleUserCreate_3rdParty(googleLogin)}
                 >
                     Google
-                </Button>
-
-                {/* Github */}
-                <Button
-                    variant="contained"
-                    startIcon={<GitHubIcon />}
-                    onClick={() => handleUserCreate_3rdParty(githubLogin)}
-                >
-                    Github
                 </Button>
             </div>
         </div>

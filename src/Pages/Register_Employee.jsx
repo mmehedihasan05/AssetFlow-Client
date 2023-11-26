@@ -66,10 +66,10 @@ const Register_Employee = () => {
 
         let data = {
             userFullName: fullName,
-            userEmail: emailInput,
+            userEmail: emailInput.toLowerCase(),
             userPassword: passwordInput,
-            userDob: dateOfBirth,
-            userImage: userImageReponse?.data?.url,
+            userDob: dateOfBirth || null,
+            userImage: userImageReponse?.data?.url || null,
             userRole: "employee",
             userCompanyLogo: null,
             userCompanyName: null,

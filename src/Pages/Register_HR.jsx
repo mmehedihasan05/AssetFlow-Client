@@ -95,14 +95,14 @@ const Register_HR = () => {
 
         let data = {
             userFullName: fullName,
-            userEmail: emailInput,
+            userEmail: emailInput.toLowerCase(),
             userPassword: passwordInput,
-            userDob: dateOfBirth,
-            userImage: userImageReponse?.data?.url,
+            userDob: dateOfBirth || null,
+            userImage: userImageReponse?.data?.url || null,
             userRole: "hr",
 
-            userCompanyLogo: companyImageReponse?.data?.url,
-            userCompanyName: companyName,
+            userCompanyLogo: companyImageReponse?.data?.url || null,
+            userCompanyName: companyName || null,
         };
         console.log(data);
         userCreate(data)
@@ -198,8 +198,6 @@ const Register_HR = () => {
                     </Button>
                 </div>
             </form>
-
-            <Authentication_3rdParty actionName="register_hr"></Authentication_3rdParty>
         </div>
     );
 };
