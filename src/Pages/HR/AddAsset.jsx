@@ -11,9 +11,9 @@ import { AuthContext } from "../../AuthProvider";
 const AddAsset = () => {
     const axiosSecure = useAxiosSecure();
     let { currentUserInfo } = useContext(AuthContext);
-    const [productName, setProductName] = useState("");
-    const [productQuantity, setProductQuantity] = useState("");
-    const [selectedType, setProductType] = useState("");
+    const [productName, setProductName] = useState(null);
+    const [productQuantity, setProductQuantity] = useState(null);
+    const [selectedType, setProductType] = useState(null);
 
     const types = [
         { label: "Returnable", value: "returnable" },
@@ -23,31 +23,22 @@ const AddAsset = () => {
     const handleAddProduct = (e) => {
         e.preventDefault();
 
-        /*
-        productName,
-        productQuantity,
-        productType
-        
-        productAddDate:
-        productAddedBy: ""
-        productSource: "company"
-        */
-
         const productInformation = {
             productName,
-            productQuantity,
-            selectedType,
+            productQuantity: Number(productQuantity),
+            productType: selectedType,
             productAddDate: new Date(),
             productAddedBy: currentUserInfo?.userEmail,
             productSource: currentUserInfo?.userRole,
         };
 
-        console.log();
-
         // Uploading blog data to server
         return toast.promise(
             axiosSecure
-                .post("/product/add", { productInformation: productInformation })
+                .post("/product/add", {
+                    productInformation: productInformation,
+                    email: currentUserInfo?.userEmail,
+                })
                 .then((response) => {
                     // console.log(response.data);
                     if (response.data?.acknowledged) {
@@ -92,7 +83,9 @@ const AddAsset = () => {
                 <Select
                     placeholder="Select Type"
                     options={types}
-                    onChange={setProductType}
+                    onChange={(selectedOption) =>
+                        setProductType(selectedOption ? selectedOption.value : null)
+                    }
                     required
                 />
 

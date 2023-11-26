@@ -16,8 +16,16 @@ import Login from "./Pages/Login";
 import Register_Employee from "./Pages/Register_Employee";
 import Register_HR from "./Pages/Register_HR";
 import AddAsset from "./Pages/HR/AddAsset";
+import AllAsset from "./Pages/HR/AllAsset";
+import PrivateRouteEmployee from "./PrivateRoutes/PrivateRouteEmployee";
+import PrivateRouteHR from "./PrivateRoutes/PrivateRouteHR";
 
 const queryClient = new QueryClient();
+
+/*
+<PrivateRouteEmployee></PrivateRouteEmployee>
+<PrivateRouteHR></PrivateRouteHR>
+*/
 
 const router = createBrowserRouter([
     {
@@ -30,7 +38,22 @@ const router = createBrowserRouter([
             // Employee Routes
 
             // HR Routes
-            { path: "/add_asset", element: <AddAsset /> },
+            {
+                path: "/add_asset",
+                element: (
+                    <PrivateRouteHR>
+                        <AddAsset />
+                    </PrivateRouteHR>
+                ),
+            },
+            {
+                path: "/asset_list",
+                element: (
+                    <PrivateRouteHR>
+                        <AllAsset />
+                    </PrivateRouteHR>
+                ),
+            },
 
             // Login and Register Routes
             { path: "/register_employee", element: <Register_Employee></Register_Employee> },

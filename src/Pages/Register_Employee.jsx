@@ -31,9 +31,6 @@ const Register_Employee = () => {
         e.preventDefault();
         let userImage = e.target.userImage.files[0];
         let userImageReponse;
-
-        console.log(userImage, userImageReponse?.success);
-
         if (userImage) {
             let toastId = toast.loading("Uploading Image...");
             const uploadImage = async (bannerImage) => {

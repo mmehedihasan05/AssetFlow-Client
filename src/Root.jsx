@@ -4,12 +4,13 @@ import useAxiosSecure from "./hooks/useAxiosSecure";
 import { AuthContext } from "./AuthProvider";
 import NavBar from "./Pages/Navbar";
 import Footer from "./Pages/Home/Footer";
+import { Navigate } from "react-router-dom";
 
 export const OtherContext = createContext();
 
 const Root = () => {
     const axiosSecure = useAxiosSecure();
-    const { currentUser } = useContext(AuthContext);
+    const { currentUserInfo } = useContext(AuthContext);
 
     const functionalities = {};
 

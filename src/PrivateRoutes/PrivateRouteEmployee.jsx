@@ -5,25 +5,15 @@ import { AuthContext } from "../AuthProvider";
 
 const PrivateRouteEmployee = ({ children }) => {
     const { currentUserInfo } = useContext(AuthContext);
-    const location = useLocation();
 
-    // if (currentUserInfo?.userEmail) {
-    //     return <div>{children}</div>;
-    // }
-
-    if (currentUserInfo?.userEmail && location?.state) {
-        return <Navigate to={location.state} />;
-    } else if (currentUserInfo?.userEmail && !location?.state) {
-        return <Navigate to="/" />;
+    if (currentUserInfo?.userEmail && currentUserInfo?.userRole === "employee") {
+        return <div>{children}</div>;
     }
 
     let toastId;
     toast.remove(toastId);
-    toastId = toast.error("Login to visit the page.");
+    toastId = toast.error("Login as Employee to visit the page.");
 
-    // toastId toast.error("Login to visit the page.");
-
-    // navigate("/login");
     return <Navigate state={location.pathname} to="/login" />;
 };
 
