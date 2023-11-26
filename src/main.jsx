@@ -15,6 +15,7 @@ import AuthProvider from "./AuthProvider";
 import Login from "./Pages/Login";
 import Register_Employee from "./Pages/Register_Employee";
 import Register_HR from "./Pages/Register_HR";
+import AddAsset from "./Pages/HR/AddAsset";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,12 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <Home /> },
 
+            // Employee Routes
+
+            // HR Routes
+            { path: "/add_asset", element: <AddAsset /> },
+
+            // Login and Register Routes
             { path: "/register_employee", element: <Register_Employee></Register_Employee> },
             { path: "/register_hr", element: <Register_HR></Register_HR> },
             { path: "/login", element: <Login></Login> },
