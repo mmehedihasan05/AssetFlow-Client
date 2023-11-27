@@ -9,9 +9,7 @@ const PublicRouteProtect = ({ children }) => {
     const { currentUserInfo } = useContext(AuthContext);
     const location = useLocation();
 
-    if (currentUserInfo?.userEmail && location?.state) {
-        return <Navigate to={location.state} />;
-    } else if (currentUserInfo?.userEmail && !location?.state) {
+    if (currentUserInfo?.userEmail) {
         return <Navigate to="/" />;
     }
     return <div>{children}</div>;

@@ -106,9 +106,18 @@ const Profile = () => {
                             name=""
                             id=""
                             className="border-b border-[#c2c2c2] py-1  bg-transparent text-[#202021]"
-                            onChange={(event) => setDateOfBirth(event.target.value)}
-                            value={dateOfBirth}
                             disabled={dobEdit}
+                            onChange={(event) => {
+                                const currentDate = new Date();
+                                const inputDate = new Date(event.target.value);
+
+                                if (inputDate <= currentDate) {
+                                    setDateOfBirth(event.target.value);
+                                } else {
+                                    toast.error("Invalid date of birth!");
+                                }
+                            }}
+                            value={dateOfBirth}
                         />
                     </div>
                     <button onClick={() => setDobEdit(!dobEdit)}>

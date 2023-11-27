@@ -133,7 +133,17 @@ const Register_Employee = () => {
                             id=""
                             className="border border-[#c2c2c2] px-6 py-4 rounded bg-transparent"
                             placeholder="Date"
-                            onChange={(event) => setDateOfBirth(event.target.value)}
+                            onChange={(event) => {
+                                const currentDate = new Date();
+                                const inputDate = new Date(event.target.value);
+
+                                if (inputDate <= currentDate) {
+                                    setDateOfBirth(event.target.value);
+                                } else {
+                                    toast.error("Invalid date of birth!");
+                                }
+                            }}
+                            value={dateOfBirth}
                         />
                     </div>
                     <div className="flex gap-4 items-center py-4">

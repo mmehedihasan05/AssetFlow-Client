@@ -25,6 +25,7 @@ import PublicRouteProtect from "./Routes_Protect/PublicRouteProtect";
 import MyEmployeeList from "./Pages/HR/MyEmployeeList";
 import Profile from "./Pages/Profile";
 import PrivateRouteCommon from "./Routes_Protect/PrivateRouteCommon";
+import MyTeam from "./Pages/Employee/MyTeam";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,14 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <Home /> },
             // Employee Routes
-
+            {
+                path: "/my_team",
+                element: (
+                    <PrivateRouteEmployee>
+                        <MyTeam />
+                    </PrivateRouteEmployee>
+                ),
+            },
             // HR Routes
             {
                 path: "/asset_list",
