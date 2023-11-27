@@ -17,8 +17,11 @@ import Register_Employee from "./Pages/Register_Employee";
 import Register_HR from "./Pages/Register_HR";
 import AddAsset from "./Pages/HR/AddAsset";
 import AllAsset from "./Pages/HR/AllAsset";
-import PrivateRouteEmployee from "./PrivateRoutes/PrivateRouteEmployee";
-import PrivateRouteHR from "./PrivateRoutes/PrivateRouteHR";
+import PrivateRouteEmployee from "./Routes_Protect/PrivateRouteEmployee";
+import PrivateRouteHR from "./Routes_Protect/PrivateRouteHR";
+import AddEmployee from "./Pages/HR/AddEmployee";
+import Payment from "./Pages/HR/Payment";
+import PublicRouteProtect from "./Routes_Protect/PublicRouteProtect";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +37,6 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             { path: "/", element: <Home /> },
-
             // Employee Routes
 
             // HR Routes
@@ -54,11 +56,48 @@ const router = createBrowserRouter([
                     </PrivateRouteHR>
                 ),
             },
+            {
+                path: "/add_employee",
+                element: (
+                    <PrivateRouteHR>
+                        <AddEmployee />
+                    </PrivateRouteHR>
+                ),
+            },
+            {
+                path: "/payment",
+                element: (
+                    <PrivateRouteHR>
+                        <Payment />
+                    </PrivateRouteHR>
+                ),
+            },
 
             // Login and Register Routes
-            { path: "/register_employee", element: <Register_Employee></Register_Employee> },
-            { path: "/register_hr", element: <Register_HR></Register_HR> },
-            { path: "/login", element: <Login></Login> },
+            {
+                path: "/register_employee",
+                element: (
+                    <PublicRouteProtect>
+                        <Register_Employee />
+                    </PublicRouteProtect>
+                ),
+            },
+            {
+                path: "/register_hr",
+                element: (
+                    <PublicRouteProtect>
+                        <Register_HR />
+                    </PublicRouteProtect>
+                ),
+            },
+            {
+                path: "/login",
+                element: (
+                    <PublicRouteProtect>
+                        <Login />
+                    </PublicRouteProtect>
+                ),
+            },
         ],
     },
 ]);

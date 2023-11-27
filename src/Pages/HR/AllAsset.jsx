@@ -73,7 +73,6 @@ sort
         setSearchUrl(`/product?email=${currentUserInfo?.userEmail}${query}`);
     };
 
-    console.log(allAsset);
     return (
         <div className="custom-width space-y-8">
             <SectionTitle data={{ title: "Asset List", noBorder: true }}></SectionTitle>
