@@ -292,6 +292,7 @@ const AuthProvider = ({ children }) => {
 
         isAdmin,
         currentUserInfo,
+        setCurrentUserInfo,
     };
 
     if (loading) {

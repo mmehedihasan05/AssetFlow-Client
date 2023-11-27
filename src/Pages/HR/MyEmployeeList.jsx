@@ -83,8 +83,12 @@ const MyEmployeeList = () => {
             <div className="space-y-2 ">
                 {isSubordinatesLoading && <DataLoading></DataLoading>}
                 {/* Employee List */}
-                <div className="space-y-4">
-                    {isSubordinatesLoading || (
+                {isSubordinatesLoading || (
+                    <div className="space-y-4">
+                        <div className="text-xl font-semibold">
+                            Total Employees : {subordinates?.length || "*"}
+                        </div>
+
                         <div className="flex gap-8 items-center border-b px-2 py-4  bg-white shadow-md rounded-lg hover:bg-blue-50">
                             {/* HR */}
                             <div className="w-[15%] flex justify-center">
@@ -107,43 +111,43 @@ const MyEmployeeList = () => {
                                 </Tooltip>
                             </div>
                         </div>
-                    )}
 
-                    {/* subordiates */}
-                    {subordinates.map((employee, idx) => (
-                        <div
-                            key={idx}
-                            className="flex gap-8 items-center
+                        {/* subordiates */}
+                        {subordinates.map((employee, idx) => (
+                            <div
+                                key={idx}
+                                className="flex gap-8 items-center
                                  border-b px-2 py-4 bg-white shadow-md rounded-lg hover:bg-blue-50"
-                        >
-                            <div className="w-[15%] flex justify-center">
-                                <img
-                                    src={employee?.userImage}
-                                    className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
-                                />
+                            >
+                                <div className="w-[15%] flex justify-center">
+                                    <img
+                                        src={employee?.userImage}
+                                        className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
+                                    />
+                                </div>
+                                <div className="flex-1">{employee?.userFullName}</div>
+                                <div className="w-[20%] flex justify-center">
+                                    <Tooltip title="Employee" arrow>
+                                        <PersonOutlineIcon></PersonOutlineIcon>
+                                    </Tooltip>
+                                </div>
+                                <div className="w-[20%] flex justify-center">
+                                    <Tooltip title="Remove from team" arrow>
+                                        <button
+                                            className="px-2"
+                                            onClick={() => {
+                                                setDeleteStage(employee);
+                                                setModalOpen(true);
+                                            }}
+                                        >
+                                            <HighlightOffIcon color="error" />
+                                        </button>
+                                    </Tooltip>
+                                </div>
                             </div>
-                            <div className="flex-1">{employee?.userFullName}</div>
-                            <div className="w-[20%] flex justify-center">
-                                <Tooltip title="Employee" arrow>
-                                    <PersonOutlineIcon></PersonOutlineIcon>
-                                </Tooltip>
-                            </div>
-                            <div className="w-[20%] flex justify-center">
-                                <Tooltip title="Remove from team" arrow>
-                                    <button
-                                        className="px-2"
-                                        onClick={() => {
-                                            setDeleteStage(employee);
-                                            setModalOpen(true);
-                                        }}
-                                    >
-                                        <HighlightOffIcon color="error" />
-                                    </button>
-                                </Tooltip>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* MODAL */}

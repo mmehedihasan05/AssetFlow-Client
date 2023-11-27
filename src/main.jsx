@@ -23,6 +23,8 @@ import AddEmployee from "./Pages/HR/AddEmployee";
 import Payment from "./Pages/HR/Payment";
 import PublicRouteProtect from "./Routes_Protect/PublicRouteProtect";
 import MyEmployeeList from "./Pages/HR/MyEmployeeList";
+import Profile from "./Pages/Profile";
+import PrivateRouteCommon from "./Routes_Protect/PrivateRouteCommon";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +81,16 @@ const router = createBrowserRouter([
                     <PrivateRouteHR>
                         <Payment />
                     </PrivateRouteHR>
+                ),
+            },
+
+            // Common Protected Routes only for HR and Employee
+            {
+                path: "/profile",
+                element: (
+                    <PrivateRouteCommon>
+                        <Profile />
+                    </PrivateRouteCommon>
                 ),
             },
 
