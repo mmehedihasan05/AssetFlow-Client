@@ -75,7 +75,7 @@ sort
 
     return (
         <div className="custom-width space-y-8">
-            <SectionTitle data={{ title: "Asset List", noBorder: true }}></SectionTitle>
+            <SectionTitle data={{ title: "Asset List", noBorder: false }}></SectionTitle>
 
             {/* Search and Filter */}
             <div className="space-y-6">

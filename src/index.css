@@ -7,6 +7,7 @@
 #root {
     --text-primary: #1976d2;
     --text-secondary: #125393;
+    --warning: #ff4c60;
 
     --bg-white: #fff;
     --bg-lite: #f9f9fe;
@@ -16,8 +17,6 @@
 
     --btn-secondary-bg: #ff4c60;
     --btn-secondary-text: #fff;
-
-    -tw-ring-color: red;
 }
 
 #root {

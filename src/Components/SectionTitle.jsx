@@ -5,11 +5,11 @@ const SectionTitle = ({ data }) => {
             {noBorder ? (
                 ""
             ) : (
-                <div className="hidden md:block border-b-[3px] w-36 border-[--text-primary]"></div>
+                <div className="hidden md:block border-b-[3px] w-36 border-[--text-secondary]"></div>
             )}
 
             <div className="text-center px-4">
-                <h1 className="text-primary sectionHeading text-3xl md:text-4xl font-semibold text-[--text-primary]">
+                <h1 className="text-primary sectionHeading text-3xl md:text-4xl font-semibold text-[--text-secondary]">
                     {title}
                 </h1>
                 <div className="text-[--text-secondary]">{description}</div>
@@ -17,7 +17,7 @@ const SectionTitle = ({ data }) => {
             {noBorder ? (
                 ""
             ) : (
-                <div className="hidden md:block border-b-[3px] w-36 border-[--text-primary]"></div>
+                <div className="hidden md:block border-b-[3px] w-36 border-[--text-secondary]"></div>
             )}
         </div>
     );

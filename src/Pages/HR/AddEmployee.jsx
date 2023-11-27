@@ -161,7 +161,7 @@ const AddEmployee = () => {
 
     return (
         <div className="space-y-16  md:max-w-full lg:max-w-[75%] mx-auto px-6">
-            <SectionTitle data={{ title: "Add an Employee", noBorder: true }}></SectionTitle>
+            <SectionTitle data={{ title: "Add an Employee", noBorder: false }}></SectionTitle>
             <div className="flex gap-3 flex-col text-center">
                 <div className="p-4 bg-white shadow-lg rounded-md text-2xl font-semibold flex items-center space-x-6">
                     <h2 className="">Total Asset :</h2>
@@ -217,24 +217,24 @@ const AddEmployee = () => {
                         {availableEmployee.map((employee, idx) => (
                             <div
                                 key={idx}
-                                className="flex gap-8 border-b p-2 items-center bg-white shadow-md rounded-lg hover:bg-blue-50"
+                                className="flex gap-8 border-b px-2 py-4 items-center bg-white shadow-md rounded-lg hover:bg-blue-50"
                             >
                                 <div>
                                     <Checkbox onChange={handleCheck} value={employee.userEmail} />
                                 </div>
-                                <div>
+                                <div className="w-[15%] flex justify-center">
                                     <img
                                         src={employee?.userImage}
                                         className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
                                     />
                                 </div>
                                 <div className="flex-1">{employee?.userFullName}</div>
-                                <div>
+                                <div className="w-[20%] flex justify-center">
                                     <Tooltip title="Employee" arrow>
                                         <PersonOutlineIcon></PersonOutlineIcon>
                                     </Tooltip>
                                 </div>
-                                <div>
+                                <div className="w-[20%] flex justify-center">
                                     <Button
                                         variant="contained"
                                         startIcon={<AddCircleOutlineIcon />}
