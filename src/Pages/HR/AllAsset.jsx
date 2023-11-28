@@ -13,7 +13,21 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DataLoading from "../../Components/DataLoading";
-
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import toast from "react-hot-toast";
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 1,
+};
 const AllAsset = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const [title_Filter, setTitle_Filter] = useState(null);
@@ -22,6 +36,14 @@ const AllAsset = () => {
     const [quantity_Filter, setQuantity_Filter] = useState(null);
     const [searchUrl, setSearchUrl] = useState(`/product?email=${currentUserInfo?.userEmail}`);
     const axiosSecure = useAxiosSecure();
+
+    const [modalOpen_update, setModalOpen_update] = useState(false);
+    const [modalOpen_delete, setModalOpen_delete] = useState(false);
+    const [actionStage, setActionStage] = useState({});
+
+    const [productName, setProductName] = useState(null);
+    const [productQuantity, setProductQuantity] = useState(null);
+    const [selectedType, setProductType] = useState(null);
 
     const availabilityOptions = [
         { label: "Available", value: "available" },
@@ -36,7 +58,11 @@ const AllAsset = () => {
         { label: "Low to High", value: "lowToHigh" },
     ];
 
-    const { data: allAsset = [], isLoading: isAllAssetLoading } = useQuery({
+    const {
+        data: allAsset = [],
+        isLoading: isAllAssetLoading,
+        refetch: refetch_allAsset,
+    } = useQuery({
         queryKey: ["allAsset", currentUserInfo?.userEmail, searchUrl],
         queryFn: async () => {
             // ?email=${currentUser?.email}
@@ -71,6 +97,70 @@ sort
         }
 
         setSearchUrl(`/product?email=${currentUserInfo?.userEmail}${query}`);
+    };
+
+    const handleProductUpdate = (asset) => {
+        let productUpdatedInfo = {
+            _id: asset._id,
+            productName: productName || asset?.productName,
+            productQuantity: productQuantity || asset?.productQuantity,
+            productType: selectedType || asset?.productType,
+        };
+
+        return toast.promise(
+            axiosSecure
+                .post("/product/update", {
+                    productInformation: productUpdatedInfo,
+                    email: currentUserInfo?.userEmail,
+                })
+                .then((response) => {
+                    console.log(response);
+                    if (response.data?.acknowledged) {
+                        refetch_allAsset();
+                        return <b>Asset updated Successfully.</b>;
+                    } else {
+                        throw new Error("Failed to update asset!");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+
+                    throw new Error("Failed to update asset!");
+                }),
+            {
+                loading: "Updating asset...",
+                success: (message) => message,
+                error: (error) => <b>Failed to update asset!</b>,
+            }
+        );
+    };
+
+    const handleProductDelete = (asset) => {
+        let assetId = asset._id;
+        return toast.promise(
+            axiosSecure
+                .delete(
+                    `/product/delete?email=${currentUserInfo?.userEmail}&targetedAssetId=${assetId}`
+                )
+                .then((response) => {
+                    refetch_allAsset();
+                    if (response.data?.acknowledged) {
+                        return <b>Product Deleted!</b>;
+                    } else {
+                        throw new Error("Failed to delete product!");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+
+                    throw new Error("Failed to delete product!");
+                }),
+            {
+                loading: "Product deleting...",
+                success: (message) => message,
+                error: (error) => <b>Failed to delete product!</b>,
+            }
+        );
     };
 
     return (
@@ -173,15 +263,129 @@ sort
                         </div>
 
                         <div className="flex justify-between">
-                            <Button variant="contained">Update</Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setActionStage(asset);
+                                    setModalOpen_update(true);
+                                }}
+                            >
+                                Update
+                            </Button>
 
-                            <Button variant="contained" color="error">
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                    setActionStage(asset);
+                                    setModalOpen_delete(true);
+                                }}
+                            >
                                 Delete
                             </Button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {/* MODAL : Product Update*/}
+            <Modal
+                open={modalOpen_update}
+                onClose={() => {
+                    setActionStage({});
+                    setModalOpen_update(false);
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div className="space-y-6">
+                        <div className="text-xl text-[--warning] font-semibold">
+                            Update the Asset
+                        </div>
+
+                        <div className="flex flex-col space-y-4">
+                            <TextField
+                                id="outlined-basic"
+                                label="Product Name"
+                                variant="outlined"
+                                onChange={(event) => setProductName(event.target.value)}
+                                defaultValue={actionStage.productName}
+                            />
+                            <TextField
+                                id="outlined-number"
+                                label="Quantity"
+                                type="number"
+                                onChange={(event) => setProductQuantity(event.target.value)}
+                                defaultValue={actionStage.productQuantity}
+                            />
+
+                            <Select
+                                placeholder="Select Type"
+                                options={assetTypeOptions}
+                                onChange={(selectedOption) =>
+                                    setProductType(selectedOption ? selectedOption.value : null)
+                                }
+                                defaultValue={
+                                    actionStage.productType === "returnable"
+                                        ? assetTypeOptions[0]
+                                        : assetTypeOptions[1]
+                                }
+                            />
+                        </div>
+
+                        <div className="flex justify-center">
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    handleProductUpdate(actionStage);
+                                    setModalOpen_update(false);
+                                    setActionStage({});
+                                }}
+                            >
+                                Update
+                            </Button>
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
+
+            {/* MODAL : Product Delete*/}
+            <Modal
+                open={modalOpen_delete}
+                onClose={() => {
+                    setActionStage({});
+                    setModalOpen_delete(false);
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div className="space-y-6">
+                        <div className="text-xl text-[--warning] font-semibold">
+                            Do you really want to delete the asset?
+                        </div>
+                        <div className="text-base font-bold">
+                            {" "}
+                            <ArrowRightIcon />
+                            {actionStage?.productName}
+                        </div>
+                        <div className="flex justify-center">
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                    handleProductDelete(actionStage);
+                                    setModalOpen_delete(false);
+                                    setActionStage({});
+                                }}
+                            >
+                                Delete
+                            </Button>
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
         </div>
     );
 };

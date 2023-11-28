@@ -9,49 +9,42 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Select from "react-select";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import DataLoading from "../../Components/DataLoading";
 import moment from "moment";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 1,
-};
+import { PDFViewer } from "@react-pdf/renderer";
+import Print from "../../Components/Print";
+import toast from "react-hot-toast";
 
 const MyAssets = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const [title_Filter, setTitle_Filter] = useState(null);
-    const [availability_Filter, setRequestSatus_Filter] = useState(null);
+    const [requestStatus_Filter, setRequestSatus_Filter] = useState(null);
     const [type_Filter, setType_Filter] = useState(null);
-    const [searchUrl, setSearchUrl] = useState(`/product?email=${currentUserInfo?.userEmail}`);
+    const [searchUrl, setSearchUrl] = useState(
+        `/product/request/list?email=${currentUserInfo?.userEmail}`
+    );
     const axiosSecure = useAxiosSecure();
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [requestStage, setRequestStage] = useState({});
-    const [additionalNotes, setAdditionalNotes] = useState("");
+    const [actionButton, setActionButton] = useState("");
 
     const requestStatusOptions = [
         { label: "Approved", value: "approved" },
-        { label: "Pending", value: "panding" },
+        { label: "Pending", value: "pending" },
     ];
     const assetTypeOptions = [
         { label: "Returnable", value: "returnable" },
         { label: "Non-Returnable", value: "non_returnable" },
     ];
 
-    const { data: allAsset = [], isLoading: isAllAssetLoading } = useQuery({
-        queryKey: ["allAsset", currentUserInfo?.userEmail, searchUrl],
+    const {
+        data: allRequestedAsset = [],
+        isLoading: isAllRequestedAssetLoading,
+        refetch: allRequestedAsset_refetch,
+    } = useQuery({
+        queryKey: ["allRequestedAsset", currentUserInfo?.userEmail, searchUrl],
         queryFn: async () => {
             // ?email=${currentUser?.email}
             const res = await axiosSecure.get(searchUrl);
@@ -59,31 +52,96 @@ const MyAssets = () => {
         },
     });
 
-    console.log("allAsset", allAsset);
+    useEffect(() => {
+        console.log("searchUrl ", { searchUrl });
+        console.log("server res ", allRequestedAsset);
+    }, [searchUrl, allRequestedAsset]);
 
     const handleSearch = () => {
-        console.log({ title_Filter, availability_Filter, type_Filter });
+        // console.log({ title_Filter, requestStatus_Filter, type_Filter });
         let query = ``;
 
         if (title_Filter && title_Filter !== "") {
             query += `&title=${title_Filter}`;
         }
 
-        if (availability_Filter) {
-            query += `&availability=${availability_Filter}`;
+        if (requestStatus_Filter) {
+            query += `&requestStatus=${requestStatus_Filter}`;
         }
 
         if (type_Filter) {
             query += `&type=${type_Filter}`;
         }
 
-        setSearchUrl(`/product?email=${currentUserInfo?.userEmail}${query}`);
+        setSearchUrl(`/product/request/list?email=${currentUserInfo?.userEmail}${query}`);
     };
 
     const handleProductRequest = () => {};
 
+    const handleRequestCancel = (asset) => {
+        // Just remove from database
+        // /product/request/cancel?email=${currentUserInfo?.userEmail}&targetedAssetId={asset._id}
+
+        let assetId = asset._id;
+        console.log(asset);
+        return toast.promise(
+            axiosSecure
+                .delete(
+                    `/product/request/cancel?email=${currentUserInfo?.userEmail}&targetedAssetId=${assetId}`
+                )
+                .then((response) => {
+                    allRequestedAsset_refetch();
+                    if (response.data?.acknowledged) {
+                        return <b>Request Canceled!</b>;
+                    } else {
+                        throw new Error("Failed to cancel request!");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+
+                    throw new Error("Failed to cancel request!");
+                }),
+            {
+                loading: "Request cancelling...",
+                success: (message) => message,
+                error: (error) => <b>Failed to cancel request!</b>,
+            }
+        );
+    };
+    const handlePrint = () => {};
+    const handleReturn = () => {
+        // remove from db and add
+    };
+
+    const buttonAction = (asset) => {
+        if (asset?.approvalStatus === "pending") {
+            return (
+                <Button variant="contained" onClick={() => handleRequestCancel(asset)}>
+                    Cancel Request
+                </Button>
+            );
+        } else if (
+            asset?.approvalStatus === "approved" &&
+            asset?.productType === "non_returnable"
+        ) {
+            return (
+                <Button variant="contained" onClick={() => handlePrint(asset)}>
+                    Print Details
+                </Button>
+            );
+        } else if (asset?.approvalStatus === "approved" && asset?.productType === "returnable") {
+            return (
+                <Button variant="contained" onClick={() => handleReturn(asset)}>
+                    Return Asset
+                </Button>
+            );
+        }
+    };
     return (
         <div className="custom-width  space-y-8">
+            <SectionTitle data={{ title: "My Requested Assets", noBorder: false }}></SectionTitle>
+
             {/* Search and Filter */}
             <div className="space-y-6">
                 <div className="space-y-3">
@@ -133,56 +191,59 @@ const MyAssets = () => {
                 </div>
             </div>
 
-            {isAllAssetLoading && <DataLoading></DataLoading>}
+            {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
             {/* Assets List Loading */}
-            <div></div>
-
-            {/* MODAL */}
-            <Modal
-                open={modalOpen}
-                onClose={() => {
-                    setRequestStage({});
-                    setModalOpen(false);
-                }}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <div className="space-y-6">
-                        <div className="text-xl text-[--warning] font-semibold">
-                            Do you really want to request for the item?
-                        </div>
-                        <div className="text-base font-bold">
-                            {" "}
-                            <ArrowRightIcon />
-                            {requestStage?.productName}
-                        </div>
+            <div className="grid grid-cols-3 gap-4">
+                {allRequestedAsset.map((asset, idx) => (
+                    <div
+                        key={idx}
+                        className="bg-white shadow-xl p-6 rounded-md space-y-6 flex flex-col"
+                    >
                         <div>
-                            <TextField
-                                id="outlined-multiline-flexible"
-                                label="Additional Notes"
-                                multiline
-                                maxRows={4}
-                                sx={{ width: "100%" }}
-                                onChange={setAdditionalNotes}
-                            />
+                            <h2 className="text-2xl font-semibold">{asset.productName}</h2>
                         </div>
-                        <div className="flex justify-center">
-                            <Button
-                                variant="contained"
-                                onClick={() => {
-                                    handleProductRequest(requestStage);
-                                    setModalOpen(false);
-                                    setRequestStage({});
-                                }}
-                            >
-                                Request
-                            </Button>
+                        <div className="space-y-2 font-medium flex-1">
+                            <div className="inline-flex gap-1">
+                                Asset Type:
+                                <p className="font-semibold">
+                                    {asset?.productType === "returnable"
+                                        ? "Returnable"
+                                        : asset?.productType === "non_returnable"
+                                        ? "Non-Returnable"
+                                        : "-"}
+                                </p>
+                            </div>
+
+                            <div className="flex gap-1">
+                                Requested Date:{" "}
+                                <p className="font-semibold">
+                                    {moment.utc(asset?.requestedDate).format("DD MMM YYYY")}
+                                </p>
+                            </div>
+
+                            <div className="flex gap-1">
+                                Approval Date:{" "}
+                                <p className="font-semibold">
+                                    {asset?.approvalDate
+                                        ? moment.utc(asset?.approvalDate).format("DD MMM YYYY")
+                                        : "-"}
+                                </p>
+                            </div>
+                            <div className="flex gap-1">
+                                Request Status:{" "}
+                                <p className="capitalize font-semibold">{asset?.approvalStatus}</p>
+                            </div>
                         </div>
+
+                        <div className="flex justify-center">{buttonAction(asset)}</div>
                     </div>
-                </Box>
-            </Modal>
+                ))}
+            </div>
+
+            {/* <PDFViewer>
+                <Print />
+            </PDFViewer> */}
         </div>
     );
 };

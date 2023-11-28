@@ -79,16 +79,20 @@ const RequestForAsset = () => {
         setSearchUrl(`/product?email=${currentUserInfo?.userEmail}${query}`);
     };
 
+    // final request for requesting for the product
     const handleProductRequest = (requestStage) => {
         const requestedProductInfo = {
             userEmail: currentUserInfo?.userEmail,
             userFullName: currentUserInfo?.userFullName,
             currentWorkingCompanyEmail: currentUserInfo?.currentWorkingCompanyEmail,
 
-            requestedDate: new Date(),
+            productName: requestStage?.productName,
             productId: requestStage?._id,
-            additionalNotes: additionalNotes.target.value,
+            requestedDate: new Date(),
+            additionalNotes: additionalNotes?.target?.value || " ",
+            productType: requestStage?.productType,
             approvalStatus: "pending",
+            approvalDate: null,
         };
 
         console.log("requestedProductInfo", requestedProductInfo);
@@ -104,6 +108,8 @@ const RequestForAsset = () => {
                     console.log(response.data);
                     if (response.data?.acknowledged) {
                         return <b>Product requested successfully!</b>;
+                    } else if (response.data?.productExists) {
+                        return <b>Product requested already!</b>;
                     } else {
                         throw new Error("Failed to send request!");
                     }
