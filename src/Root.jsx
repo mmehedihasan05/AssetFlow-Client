@@ -21,7 +21,7 @@ const Root = () => {
                     <div>
                         <NavBar></NavBar>
                     </div>
-                    <div>
+                    <div className="">
                         <Outlet></Outlet>
                     </div>
                     <div className="mt-auto">

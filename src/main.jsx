@@ -26,6 +26,9 @@ import MyEmployeeList from "./Pages/HR/MyEmployeeList";
 import Profile from "./Pages/Profile";
 import PrivateRouteCommon from "./Routes_Protect/PrivateRouteCommon";
 import MyTeam from "./Pages/Employee/MyTeam";
+import RequestForAsset from "./Pages/Employee/RequestForAsset";
+import MyAssets from "./Pages/Employee/MyAssets";
+import MakeCustomRequest from "./Pages/Employee/MakeCustomRequest";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +50,30 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRouteEmployee>
                         <MyTeam />
+                    </PrivateRouteEmployee>
+                ),
+            },
+            {
+                path: "/request_for_asset",
+                element: (
+                    <PrivateRouteEmployee>
+                        <RequestForAsset />
+                    </PrivateRouteEmployee>
+                ),
+            },
+            {
+                path: "/my_assets",
+                element: (
+                    <PrivateRouteEmployee>
+                        <MyAssets />
+                    </PrivateRouteEmployee>
+                ),
+            },
+            {
+                path: "/make_custom_request",
+                element: (
+                    <PrivateRouteEmployee>
+                        <MakeCustomRequest />
                     </PrivateRouteEmployee>
                 ),
             },

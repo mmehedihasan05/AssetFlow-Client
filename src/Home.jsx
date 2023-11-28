@@ -4,7 +4,7 @@ import Packages from "./Pages/Home/Packages";
 
 const Home = () => {
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 custom-width">
             <Banner></Banner>
             <About></About>
             <Packages></Packages>
