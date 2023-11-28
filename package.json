@@ -27,6 +27,7 @@
         "react-loader-spinner": "^5.4.5",
         "react-router-dom": "^6.20.0",
         "react-select": "^5.8.0",
+        "react-to-print": "^2.14.15",
         "swiper": "^11.0.5"
     },
     "devDependencies": {

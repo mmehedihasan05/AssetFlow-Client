@@ -29,6 +29,7 @@ import MyTeam from "./Pages/Employee/MyTeam";
 import RequestForAsset from "./Pages/Employee/RequestForAsset";
 import MyAssets from "./Pages/Employee/MyAssets";
 import MakeCustomRequest from "./Pages/Employee/MakeCustomRequest";
+import AllRequests from "./Pages/HR/AllRequests";
 
 const queryClient = new QueryClient();
 
@@ -91,6 +92,14 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRouteHR>
                         <AddAsset />
+                    </PrivateRouteHR>
+                ),
+            },
+            {
+                path: "/all_requests",
+                element: (
+                    <PrivateRouteHR>
+                        <AllRequests />
                     </PrivateRouteHR>
                 ),
             },

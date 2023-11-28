@@ -61,7 +61,7 @@ const RequestForAsset = () => {
     });
 
     const handleSearch = () => {
-        console.log({ title_Filter, availability_Filter, type_Filter });
+        // console.log({ title_Filter, availability_Filter, type_Filter });
         let query = ``;
 
         if (title_Filter && title_Filter !== "") {
@@ -95,17 +95,16 @@ const RequestForAsset = () => {
             approvalDate: null,
         };
 
-        console.log("requestedProductInfo", requestedProductInfo);
+        // console.log("requestedProductInfo", requestedProductInfo);
 
-        // Uploading blog data to server
         return toast.promise(
             axiosSecure
-                .post("/product/request", {
+                .post("/product/request/add", {
                     requestedProductInfo: requestedProductInfo,
                     email: currentUserInfo?.userEmail,
                 })
                 .then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     if (response.data?.acknowledged) {
                         return <b>Product requested successfully!</b>;
                     } else if (response.data?.productExists) {

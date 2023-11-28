@@ -72,7 +72,7 @@ const AllAsset = () => {
     });
 
     const handleSearch = () => {
-        console.log({ title_Filter, availability_Filter, type_Filter, quantity_Filter });
+        // console.log({ title_Filter, availability_Filter, type_Filter, quantity_Filter });
         let query = ``;
         /*
 title
@@ -114,7 +114,7 @@ sort
                     email: currentUserInfo?.userEmail,
                 })
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     if (response.data?.acknowledged) {
                         refetch_allAsset();
                         return <b>Asset updated Successfully.</b>;
