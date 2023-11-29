@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
+import AssetCardEmployee from "../../Components/Cards/AssetCardEmployee";
+import MinimalCard from "../../Components/Cards/MinimalCard";
 import DataLoading from "../../Components/DataLoading";
-import PopularRequest from "../../Components/PopularRequest";
 import SectionTitle from "../../Components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -101,48 +102,7 @@ const Employee_Home = () => {
                 {/* Assets List  */}
                 <div className="grid grid-cols-3 gap-4">
                     {pendingRequests.map((asset, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-white shadow-xl p-6 rounded-md space-y-6 flex flex-col"
-                        >
-                            <div>
-                                <h2 className="text-2xl font-semibold">{asset.productName}</h2>
-                            </div>
-                            <div className="space-y-2 font-medium flex-1">
-                                <div className="inline-flex gap-1">
-                                    Asset Type:
-                                    <p className="font-semibold">
-                                        {asset?.productType === "returnable"
-                                            ? "Returnable"
-                                            : asset?.productType === "non_returnable"
-                                            ? "Non-Returnable"
-                                            : "-"}
-                                    </p>
-                                </div>
-
-                                <div className="flex gap-1">
-                                    Requested Date:{" "}
-                                    <p className="font-semibold">
-                                        {moment.utc(asset?.requestedDate).format("DD MMM YYYY")}
-                                    </p>
-                                </div>
-
-                                <div className="flex gap-1">
-                                    Approval Date:{" "}
-                                    <p className="font-semibold">
-                                        {asset?.approvalDate
-                                            ? moment.utc(asset?.approvalDate).format("DD MMM YYYY")
-                                            : "-"}
-                                    </p>
-                                </div>
-                                <div className="flex gap-1">
-                                    Request Status:{" "}
-                                    <p className="capitalize font-semibold">
-                                        {asset?.approvalStatus}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <AssetCardEmployee key={idx} asset={asset}></AssetCardEmployee>
                     ))}
                 </div>
             </div>
@@ -160,48 +120,7 @@ const Employee_Home = () => {
                 {/* Assets List  */}
                 <div className="grid grid-cols-3 gap-4">
                     {monthlyRequests.map((asset, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-white shadow-xl p-6 rounded-md space-y-6 flex flex-col"
-                        >
-                            <div>
-                                <h2 className="text-2xl font-semibold">{asset.productName}</h2>
-                            </div>
-                            <div className="space-y-2 font-medium flex-1">
-                                <div className="inline-flex gap-1">
-                                    Asset Type:
-                                    <p className="font-semibold">
-                                        {asset?.productType === "returnable"
-                                            ? "Returnable"
-                                            : asset?.productType === "non_returnable"
-                                            ? "Non-Returnable"
-                                            : "-"}
-                                    </p>
-                                </div>
-
-                                <div className="flex gap-1">
-                                    Requested Date:{" "}
-                                    <p className="font-semibold">
-                                        {moment.utc(asset?.requestedDate).format("DD MMM YYYY")}
-                                    </p>
-                                </div>
-
-                                <div className="flex gap-1">
-                                    Approval Date:{" "}
-                                    <p className="font-semibold">
-                                        {asset?.approvalDate
-                                            ? moment.utc(asset?.approvalDate).format("DD MMM YYYY")
-                                            : "-"}
-                                    </p>
-                                </div>
-                                <div className="flex gap-1">
-                                    Request Status:{" "}
-                                    <p className="capitalize font-semibold">
-                                        {asset?.approvalStatus}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <AssetCardEmployee key={idx} asset={asset}></AssetCardEmployee>
                     ))}
                 </div>
             </div>
@@ -218,7 +137,7 @@ const Employee_Home = () => {
 
                 <div className="grid grid-cols-3 gap-4">
                     {frequentlyRequested.map((asset, idx) => (
-                        <PopularRequest key={idx} asset={asset}></PopularRequest>
+                        <MinimalCard key={idx} asset={asset}></MinimalCard>
                     ))}
                 </div>
             </div>

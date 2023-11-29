@@ -1,4 +1,4 @@
-const PopularRequest = ({ asset }) => {
+const MinimalCard = ({ asset }) => {
     return (
         <div className="bg-white shadow-xl p-6 rounded-md space-y-6 flex flex-col">
             <div>
@@ -24,4 +24,4 @@ const PopularRequest = ({ asset }) => {
     );
 };
 
-export default PopularRequest;
+export default MinimalCard;

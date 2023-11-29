@@ -2,10 +2,10 @@ import { Button } from "@mui/material";
 import moment from "moment";
 import { useContext } from "react";
 import toast from "react-hot-toast";
-import { AuthContext } from "../AuthProvider";
-import useAxiosSecure from "../hooks/useAxiosSecure";
+import { AuthContext } from "../../AuthProvider";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const RequestedAsset = ({ asset, allAssetRefetch }) => {
+const AssetCardHr = ({ asset, allAssetRefetch }) => {
     let { currentUserInfo } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
 
@@ -137,4 +137,4 @@ const RequestedAsset = ({ asset, allAssetRefetch }) => {
     );
 };
 
-export default RequestedAsset;
+export default AssetCardHr;

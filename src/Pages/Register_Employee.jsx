@@ -124,14 +124,17 @@ const Register_Employee = () => {
                         />
                     </FormControl>
 
-                    <div className="flex gap-4 items-center">
+                    <div
+                        className="flex gap-4 items-center 
+                    border border-[#c2c2c2] px-4 py-4 rounded bg-white"
+                    >
                         <p>Date of Birth: </p>
 
                         <input
                             type="date"
                             name=""
                             id=""
-                            className="border border-[#c2c2c2] px-6 py-4 rounded bg-transparent"
+                            className=""
                             placeholder="Date"
                             onChange={(event) => {
                                 const currentDate = new Date();
@@ -146,7 +149,10 @@ const Register_Employee = () => {
                             value={dateOfBirth}
                         />
                     </div>
-                    <div className="flex gap-4 items-center py-4">
+                    <div
+                        className="flex gap-4 items-center
+                    border border-[#c2c2c2] px-4 py-4 rounded bg-white"
+                    >
                         <p>User Image: </p>
 
                         <input type="file" name="userImage" id="" />

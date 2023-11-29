@@ -30,7 +30,7 @@ import RequestForAsset from "./Pages/Employee/RequestForAsset";
 import MyAssets from "./Pages/Employee/MyAssets";
 import MakeCustomRequest from "./Pages/Employee/MakeCustomRequest";
 import AllRequests from "./Pages/HR/AllRequests";
-import CustomRequests from "./Pages/HR/CustomRequests";
+import CustomRequestList from "./Pages/HR/CustomRequestList";
 
 const queryClient = new QueryClient();
 
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
                 path: "/custom_requests_list",
                 element: (
                     <PrivateRouteHR>
-                        <CustomRequests />
+                        <CustomRequestList />
                     </PrivateRouteHR>
                 ),
             },

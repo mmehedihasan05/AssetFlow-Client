@@ -4,11 +4,11 @@ import moment from "moment";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import DataLoading from "../../Components/DataLoading";
-import PopularRequest from "../../Components/PopularRequest";
-import RequestedAsset from "../../Components/RequestedAsset";
 import SectionTitle from "../../Components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Chart } from "react-google-charts";
+import AssetCardHr from "../../Components/Cards/AssetCardHr";
+import MinimalCard from "../../Components/Cards/MinimalCard";
 
 const options = {
     title: "Asset Request Comparision",
@@ -94,11 +94,11 @@ const HR_Home = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                     {requestedAssets.map((asset, idx) => (
-                        <RequestedAsset
+                        <AssetCardHr
                             key={idx}
                             asset={asset}
                             allAssetRefetch={allRequestedAsset_refetch}
-                        ></RequestedAsset>
+                        ></AssetCardHr>
                     ))}
                 </div>
             </div>
@@ -115,7 +115,7 @@ const HR_Home = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                     {topRequested.map((asset, idx) => (
-                        <PopularRequest key={idx} asset={asset}></PopularRequest>
+                        <MinimalCard key={idx} asset={asset}></MinimalCard>
                     ))}
                 </div>
             </div>
@@ -132,7 +132,7 @@ const HR_Home = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                     {topRequested.map((asset, idx) => (
-                        <PopularRequest key={idx} asset={asset}></PopularRequest>
+                        <MinimalCard key={idx} asset={asset}></MinimalCard>
                     ))}
                 </div>
             </div>

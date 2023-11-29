@@ -9,7 +9,8 @@ import DataLoading from "../../Components/DataLoading";
 import moment from "moment";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
-import RequestedAsset from "../../Components/RequestedAsset";
+import AssetCardHr from "../../Components/Cards/AssetCardHr";
+
 const AllRequests = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
@@ -71,11 +72,11 @@ const AllRequests = () => {
             {/* Assets List Loading */}
             <div className="grid grid-cols-2 gap-4">
                 {allRequestedAsset.map((asset, idx) => (
-                    <RequestedAsset
+                    <AssetCardHr
                         key={idx}
                         asset={asset}
                         allAssetRefetch={allRequestedAsset_refetch}
-                    ></RequestedAsset>
+                    ></AssetCardHr>
                 ))}
             </div>
 
