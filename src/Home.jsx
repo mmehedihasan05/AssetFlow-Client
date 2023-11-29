@@ -17,7 +17,7 @@ const Home = () => {
                 <PrivateRouteEmployee>
                     <Employee_Home />
                 </PrivateRouteEmployee>
-            ) : currentUserInfo.userRole === "employee" ? (
+            ) : currentUserInfo.userRole === "hr" ? (
                 <PrivateRouteHR>
                     <HR_Home />
                 </PrivateRouteHR>
@@ -28,6 +28,7 @@ const Home = () => {
                     <Packages></Packages>
                 </>
             )}
+
             <Helmet>
                 <title>Home</title>
             </Helmet>

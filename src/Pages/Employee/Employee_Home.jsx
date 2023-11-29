@@ -3,6 +3,7 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import DataLoading from "../../Components/DataLoading";
+import PopularRequest from "../../Components/PopularRequest";
 import SectionTitle from "../../Components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -87,7 +88,7 @@ const Employee_Home = () => {
             {/* <div></div> */}
 
             {/* My pending requests */}
-            <div className="space-y-6">
+            <div className="space-y-8">
                 <SectionTitle
                     data={{
                         title: "My pending requests",
@@ -147,7 +148,7 @@ const Employee_Home = () => {
             </div>
 
             {/* My mothly requests */}
-            <div className="space-y-6 ">
+            <div className="space-y-8 ">
                 <SectionTitle
                     data={{
                         title: "My Monthly requests",
@@ -206,7 +207,7 @@ const Employee_Home = () => {
             </div>
 
             {/* Frequently Requested Items */}
-            <div className="space-y-6 ">
+            <div className="space-y-8 ">
                 <SectionTitle
                     data={{
                         title: "Frequently Requested Items",
@@ -215,35 +216,9 @@ const Employee_Home = () => {
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                {/* Assets List  */}
                 <div className="grid grid-cols-3 gap-4">
                     {frequentlyRequested.map((asset, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-white shadow-xl p-6 rounded-md space-y-6 flex flex-col"
-                        >
-                            <div>
-                                <h2 className="text-2xl font-semibold">{asset.productName}</h2>
-                            </div>
-                            <div className="space-y-2 font-medium flex-1">
-                                <div className="inline-flex gap-1">
-                                    Asset Type:
-                                    <p className="font-semibold">
-                                        {asset?.productType === "returnable"
-                                            ? "Returnable"
-                                            : asset?.productType === "non_returnable"
-                                            ? "Non-Returnable"
-                                            : "-"}
-                                    </p>
-                                </div>
-                                <div className="flex gap-1">
-                                    Total Requested:{" "}
-                                    <p className="capitalize font-semibold">
-                                        {asset?.totalRequested} times
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <PopularRequest key={idx} asset={asset}></PopularRequest>
                     ))}
                 </div>
             </div>

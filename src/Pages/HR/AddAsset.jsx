@@ -63,7 +63,13 @@ const AddAsset = () => {
 
     return (
         <div className="max-w-3xl mx-auto space-y-8 mb-8">
-            <SectionTitle data={{ title: "Add an Asset", noBorder: false }}></SectionTitle>
+            <SectionTitle
+                data={{
+                    title: "Add an Asset",
+                    description: "Create an asset for employee",
+                    noBorder: false,
+                }}
+            ></SectionTitle>
             <form onSubmit={handleAddProduct} className="flex flex-col space-y-4">
                 <TextField
                     id="outlined-basic"

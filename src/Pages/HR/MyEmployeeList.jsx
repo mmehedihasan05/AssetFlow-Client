@@ -79,7 +79,9 @@ const MyEmployeeList = () => {
 
     return (
         <div className="space-y-8  md:max-w-full lg:max-w-[75%] mx-auto px-6">
-            <SectionTitle data={{ title: "My Employees" }}></SectionTitle>
+            <SectionTitle
+                data={{ title: "My Employees", description: "Employees under your supervision" }}
+            ></SectionTitle>
             <div className="space-y-2 ">
                 {isSubordinatesLoading && <DataLoading></DataLoading>}
                 {/* Employee List */}

@@ -161,7 +161,9 @@ const AddEmployee = () => {
 
     return (
         <div className="space-y-16  md:max-w-full lg:max-w-[75%] mx-auto px-6">
-            <SectionTitle data={{ title: "Add an Employee", noBorder: false }}></SectionTitle>
+            <SectionTitle
+                data={{ title: "Add an Employee", description: "Add employee to your team" }}
+            ></SectionTitle>
             <div className="flex gap-3 flex-col text-center">
                 <div className="p-4 bg-white shadow-lg rounded-md text-2xl font-semibold flex items-center space-x-6">
                     <h2 className="">Total Asset :</h2>
