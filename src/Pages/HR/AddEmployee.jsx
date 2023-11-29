@@ -11,7 +11,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Tooltip from "@mui/material/Tooltip";
 import toast from "react-hot-toast";
 import DataLoading from "../../Components/DataLoading";
-
+import { Helmet } from "react-helmet-async";
 const AddEmployee = () => {
     // /users/available
     let { currentUserInfo } = useContext(AuthContext);
@@ -250,6 +250,9 @@ const AddEmployee = () => {
                     </div>
                 </div>
             </div>
+            <Helmet>
+                <title>Add Employee - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

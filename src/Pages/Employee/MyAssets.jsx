@@ -19,6 +19,8 @@ import moment from "moment";
 import { PDFViewer } from "@react-pdf/renderer";
 import toast from "react-hot-toast";
 import Print from "../../Components/Print";
+import { Helmet } from "react-helmet-async";
+
 const style = {
     position: "absolute",
     top: "50%",
@@ -167,7 +169,6 @@ const MyAssets = () => {
     };
 
     const buttonAction = (asset) => {
-        console.log(asset);
         if (asset?.approvalStatus === "pending") {
             return (
                 <Button variant="contained" onClick={() => handleRequestCancel(asset)}>
@@ -185,6 +186,7 @@ const MyAssets = () => {
                         setRequestStage(asset);
                         setModalOpen(true);
                     }}
+                    color="secondary"
                 >
                     Print Details
                 </Button>
@@ -207,7 +209,13 @@ const MyAssets = () => {
 
     return (
         <div className="custom-width  space-y-8">
-            <SectionTitle data={{ title: "My Requested Assets", noBorder: false }}></SectionTitle>
+            <SectionTitle
+                data={{
+                    title: "My Requested Assets",
+                    description: "All requested items by you",
+                    noBorder: false,
+                }}
+            ></SectionTitle>
 
             {/* Search and Filter */}
             <div className="space-y-6">
@@ -385,6 +393,10 @@ const MyAssets = () => {
                     </div>
                 </Box>
             </Modal>
+
+            <Helmet>
+                <title>My Assets - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

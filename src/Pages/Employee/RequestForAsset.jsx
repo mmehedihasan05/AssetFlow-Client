@@ -29,7 +29,7 @@ const style = {
     p: 4,
     borderRadius: 1,
 };
-
+import { Helmet } from "react-helmet-async";
 const RequestForAsset = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const [title_Filter, setTitle_Filter] = useState(null);
@@ -128,7 +128,13 @@ const RequestForAsset = () => {
 
     return (
         <div className="custom-width  space-y-8">
-            <SectionTitle data={{ title: "Asset List", noBorder: false }}></SectionTitle>
+            <SectionTitle
+                data={{
+                    title: "Asset List",
+                    description: "All asset from your company",
+                    noBorder: false,
+                }}
+            ></SectionTitle>
 
             {/* Search and Filter */}
             <div className="space-y-6">
@@ -274,6 +280,9 @@ const RequestForAsset = () => {
                     </div>
                 </Box>
             </Modal>
+            <Helmet>
+                <title>Request for Asset - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

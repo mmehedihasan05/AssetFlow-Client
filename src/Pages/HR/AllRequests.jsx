@@ -8,7 +8,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import DataLoading from "../../Components/DataLoading";
 import moment from "moment";
 import toast from "react-hot-toast";
-
+import { Helmet } from "react-helmet-async";
 const AllRequests = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
@@ -201,6 +201,10 @@ const AllRequests = () => {
             </div>
 
             {/* Print Modal */}
+
+            <Helmet>
+                <title>All Requests - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

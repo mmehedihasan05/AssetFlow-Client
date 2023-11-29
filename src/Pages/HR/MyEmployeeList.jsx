@@ -14,7 +14,7 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-
+import { Helmet } from "react-helmet-async";
 const style = {
     position: "absolute",
     top: "50%",
@@ -190,6 +190,9 @@ const MyEmployeeList = () => {
                     </div>
                 </Box>
             </Modal>
+            <Helmet>
+                <title>My Employees - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

@@ -1,12 +1,12 @@
 import { Helmet } from "react-helmet-async";
-const MakeCustomRequest = () => {
+const CustomRequests = () => {
     return (
         <div>
             <Helmet>
-                <title>Make Custom Request - AssetFlow</title>
+                <title>Custom Requests List - AssetFlow</title>
             </Helmet>
         </div>
     );
 };
 
-export default MakeCustomRequest;
+export default CustomRequests;

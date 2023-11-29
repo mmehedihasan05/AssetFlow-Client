@@ -28,6 +28,7 @@ const style = {
     p: 4,
     borderRadius: 1,
 };
+import { Helmet } from "react-helmet-async";
 const AllAsset = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const [title_Filter, setTitle_Filter] = useState(null);
@@ -165,7 +166,13 @@ sort
 
     return (
         <div className="custom-width space-y-8">
-            <SectionTitle data={{ title: "Asset List", noBorder: false }}></SectionTitle>
+            <SectionTitle
+                data={{
+                    title: "Asset List",
+
+                    noBorder: false,
+                }}
+            ></SectionTitle>
 
             {/* Search and Filter */}
             <div className="space-y-6">
@@ -386,6 +393,9 @@ sort
                     </div>
                 </Box>
             </Modal>
+            <Helmet>
+                <title>Asset List - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../AuthProvider";
-
+import { Helmet } from "react-helmet-async";
 const AddAsset = () => {
     const axiosSecure = useAxiosSecure();
     let { currentUserInfo } = useContext(AuthContext);
@@ -93,6 +93,9 @@ const AddAsset = () => {
                     Add Product
                 </Button>
             </form>
+            <Helmet>
+                <title>Add Asset - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };

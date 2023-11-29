@@ -8,6 +8,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import moment from "moment";
 import DataLoading from "../../Components/DataLoading";
+import { Helmet } from "react-helmet-async";
 
 function daysToBirthday(birthday) {}
 daysToBirthday("2023-11-25");
@@ -155,6 +156,10 @@ const MyTeam = () => {
                     )}
                 </div>
             </div>
+
+            <Helmet>
+                <title>My Team - AssetFlow</title>
+            </Helmet>
         </div>
     );
 };
