@@ -1,6 +1,4 @@
-import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import moment from "moment";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import DataLoading from "../../Components/DataLoading";
@@ -9,6 +7,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Chart } from "react-google-charts";
 import AssetCardHr from "../../Components/Cards/AssetCardHr";
 import MinimalCard from "../../Components/Cards/MinimalCard";
+import LimitedStockViewer from "../../Components/LimitedStockViewer";
 
 const options = {
     title: "Asset Request Comparision",
@@ -28,6 +27,7 @@ const HR_Home = () => {
         ["Non-Returnable Asset", 0],
     ]);
 
+    // Requested Assets
     const {
         data: allRequestedAsset = [],
         isLoading: isAllRequestedAssetLoading,
@@ -80,6 +80,19 @@ const HR_Home = () => {
             return res.data;
         },
     });
+
+    // All assets listed by HR
+    const { data: limitedStock = [], isLoading: islimitedStockLoading } = useQuery({
+        queryKey: ["limitedStock", currentUserInfo?.userEmail],
+        queryFn: async () => {
+            // ?email=${currentUser?.email}
+            const res = await axiosSecure.get(
+                `/product/limited-stock?email=${currentUserInfo?.userEmail}`
+            );
+            return res.data.limitedStock;
+        },
+    });
+
     return (
         <div className="space-y-16">
             {/* All Requests */}
@@ -121,20 +134,16 @@ const HR_Home = () => {
             </div>
 
             {/* Limited Stock items */}
-            <div className="space-y-8 hidden">
+            <div className="space-y-8 ">
                 <SectionTitle
                     data={{
-                        title: "Top Requested Assets",
-                        description: "Assets that requested most",
+                        title: "Limited Stock Assets",
+                        description: "Assets with limited availability ",
                     }}
                 ></SectionTitle>
-                {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+                {islimitedStockLoading && <DataLoading></DataLoading>}
 
-                <div className="grid grid-cols-2 gap-4">
-                    {topRequested.map((asset, idx) => (
-                        <MinimalCard key={idx} asset={asset}></MinimalCard>
-                    ))}
-                </div>
+                <LimitedStockViewer limitedStock={limitedStock}></LimitedStockViewer>
             </div>
 
             {/* Asset Request Comparison Pie Chart */}
