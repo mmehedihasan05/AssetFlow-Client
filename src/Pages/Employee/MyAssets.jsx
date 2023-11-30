@@ -50,7 +50,6 @@ const MyAssets = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [requestStage, setRequestStage] = useState({});
     const [actionButton, setActionButton] = useState("");
-    const [printStage, setPrintStage] = useState(false);
     const componentRef = useRef();
 
     const handlePrint = useReactToPrint({
@@ -78,11 +77,6 @@ const MyAssets = () => {
             return res.data;
         },
     });
-
-    useEffect(() => {
-        console.log("searchUrl ", { searchUrl });
-        console.log("server res ", allRequestedAsset);
-    }, [searchUrl, allRequestedAsset]);
 
     const handleSearch = () => {
         // console.log({ title_Filter, requestStatus_Filter, type_Filter });
@@ -163,7 +157,7 @@ const MyAssets = () => {
             </div>
 
             {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-            {allRequestedAsset.length === 0 && <Empty></Empty>}
+            {allRequestedAsset.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
 
             {/* Assets List Loading */}
             <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
@@ -172,87 +166,12 @@ const MyAssets = () => {
                         key={idx}
                         asset={asset}
                         allRequestedAsset_refetch={allRequestedAsset_refetch}
+                        requestStage={requestStage}
                         setRequestStage={setRequestStage}
-                        setModalOpen={setModalOpen}
                         button={true}
                     ></AssetCardEmployee>
                 ))}
             </div>
-
-            {/* Print Modal */}
-            {/* MODAL */}
-            <Modal
-                open={modalOpen}
-                onClose={() => {
-                    setRequestStage({});
-                    setModalOpen(false);
-                }}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <div className="space-y-6 h-full">
-                        <div className="flex border  h-full  flex-col justify-between items-center  ">
-                            <div
-                                className=" w-full p-4 h-full
-                            flex flex-col justify-between"
-                                ref={componentRef}
-                            >
-                                <div>
-                                    <div className="">
-                                        <img
-                                            src={currentUserInfo?.currentWorkingCompanyImage}
-                                            className="max-w-[220px] max-h-[42px] mx-auto"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="text-base">
-                                        <div>
-                                            Company Name:{" "}
-                                            {currentUserInfo?.currentWorkingCompanyName}
-                                        </div>
-                                        <div className="pt-8 text-xl">
-                                            {requestStage?.productName}
-                                        </div>
-                                        <div className="">Request Id: {requestStage?._id}</div>
-                                        <div className="">
-                                            Product Id: {requestStage?.productId}
-                                        </div>
-                                        <div className="capitalize">
-                                            Type: {requestStage?.productType}
-                                        </div>
-                                        <div className="">
-                                            Approval Date:{" "}
-                                            {moment
-                                                .utc(requestStage?.approvalDate)
-                                                .format("DD MMM YYYY")}
-                                        </div>
-                                        <div>
-                                            Issued to : {requestStage?.userFullName}
-                                            {"  "}[{requestStage?.userEmail}]
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Date */}
-                                <div className="text-end">{currentDate}</div>
-                            </div>
-
-                            <Button
-                                variant="contained"
-                                onClick={() => {
-                                    handlePrint();
-                                    setModalOpen(false);
-                                }}
-                                className=""
-                                sx={{ width: "fit-content" }}
-                            >
-                                Print Now
-                            </Button>
-                        </div>
-                    </div>
-                </Box>
-            </Modal>
 
             <Helmet>
                 <title>My Assets - AssetFlow</title>

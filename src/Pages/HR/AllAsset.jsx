@@ -236,7 +236,7 @@ sort
 
             {isAllAssetLoading && <DataLoading></DataLoading>}
 
-            {allAsset.length === 0 && <Empty></Empty>}
+            {allAsset.length === 0 && !isAllAssetLoading && <Empty></Empty>}
 
             {/* Asset List */}
             <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">

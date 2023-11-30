@@ -36,6 +36,7 @@ const AuthProvider = ({ children }) => {
     const [theme, setTheme] = useState(localStorage.getItem("current-theme") || "dark");
     const [isNewSignupHR, setIsNewSignupHR] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState(null);
+    const [printStage, setPrintStage] = useState("");
     const axiosSecure = useAxiosSecure();
 
     const auth = getAuth(app);
@@ -304,6 +305,9 @@ const AuthProvider = ({ children }) => {
 
         selectedPackage,
         setSelectedPackage,
+
+        printStage,
+        setPrintStage,
     };
     // logout();
     if (loading) {

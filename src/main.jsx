@@ -33,6 +33,7 @@ import AllRequests from "./Pages/HR/AllRequests";
 import CustomRequestList from "./Pages/HR/CustomRequestList";
 import CheckOutForm from "./hooks/CheckoutForm";
 import MakePaymentRedirect from "./Pages/HR/MakePaymentRedirect";
+import Print from "./Pages/HR/Print";
 
 const queryClient = new QueryClient();
 
@@ -142,6 +143,7 @@ const router = createBrowserRouter([
                     </PrivateRouteHR>
                 ),
             },
+
             {
                 path: "/payment",
                 element: (
@@ -195,6 +197,10 @@ const router = createBrowserRouter([
                 ),
             },
         ],
+    },
+    {
+        path: "/print-asset",
+        element: <Print />,
     },
 ]);
 

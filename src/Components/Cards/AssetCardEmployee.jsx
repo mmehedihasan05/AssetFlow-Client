@@ -1,17 +1,11 @@
 import { Button } from "@mui/material";
 import moment from "moment";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const AssetCardEmployee = ({
-    asset,
-    allRequestedAsset_refetch,
-    setModalOpen,
-    setRequestStage,
-    button = false,
-}) => {
+const AssetCardEmployee = ({ asset, allRequestedAsset_refetch, button = false }) => {
     let { currentUserInfo } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
 
@@ -82,6 +76,14 @@ const AssetCardEmployee = ({
         );
     };
 
+    const handleOpenPrintWindow = (asset) => {
+        const printWindow = window.open(
+            `/print-asset?currentWorkingCompanyImage=${currentUserInfo?.currentWorkingCompanyImage}&currentWorkingCompanyName=${currentUserInfo?.currentWorkingCompanyName}&productName=${asset?.productName}&productId=${asset?.productId}&productType=${asset?.productType}&approvalDate=${asset?.approvalDate}&userFullName=${currentUserInfo?.userFullName}&userEmail=${currentUserInfo?.userEmail}}`,
+            "_blank",
+            "scrollbars=yes,top=500,left=500,width=800,height=800"
+        );
+    };
+
     const buttonAction = (asset) => {
         if (asset?.approvalStatus === "pending") {
             return (
@@ -97,8 +99,7 @@ const AssetCardEmployee = ({
                 <Button
                     variant="contained"
                     onClick={() => {
-                        setRequestStage(asset);
-                        setModalOpen(true);
+                        handleOpenPrintWindow(asset);
                     }}
                     color="secondary"
                 >

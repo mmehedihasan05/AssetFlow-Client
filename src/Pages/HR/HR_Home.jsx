@@ -149,7 +149,7 @@ const HR_Home = () => {
                     }}
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-                {requestedAssets.length === 0 && <Empty></Empty>}
+                {requestedAssets.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {requestedAssets.map((asset, idx) => (
                         <AssetCardHr
@@ -177,7 +177,7 @@ const HR_Home = () => {
                     }}
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-                {topRequested.length === 0 && <Empty></Empty>}
+                {topRequested.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {topRequested.map((asset, idx) => (
@@ -195,7 +195,7 @@ const HR_Home = () => {
                     }}
                 ></SectionTitle>
                 {islimitedStockLoading && <DataLoading></DataLoading>}
-                {limitedStock.length === 0 && <Empty></Empty>}
+                {limitedStock.length === 0 && !islimitedStockLoading && <Empty></Empty>}
 
                 <LimitedStockViewer limitedStock={limitedStock}></LimitedStockViewer>
             </div>
@@ -216,7 +216,7 @@ const HR_Home = () => {
 
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                {allRequestedAsset.length === 0 ? (
+                {allRequestedAsset.length === 0 && !isAllRequestedAssetLoading ? (
                     <Empty></Empty>
                 ) : (
                     <Chart
@@ -247,7 +247,7 @@ const HR_Home = () => {
 
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                {allRequestedAsset.length === 0 ? (
+                {allRequestedAsset.length === 0 && !isAllRequestedAssetLoading ? (
                     <Empty></Empty>
                 ) : (
                     <Chart

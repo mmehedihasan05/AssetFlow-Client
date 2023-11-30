@@ -138,7 +138,7 @@ const Employee_Home = () => {
                 ></SectionTitle>
 
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-                {pendingRequests.length === 0 && <Empty></Empty>}
+                {pendingRequests.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
 
                 {/* Assets List  */}
                 <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
@@ -158,7 +158,7 @@ const Employee_Home = () => {
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                {monthlyRequests.length === 0 && <Empty></Empty>}
+                {monthlyRequests.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
 
                 {/* Assets List  */}
                 <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
@@ -177,7 +177,7 @@ const Employee_Home = () => {
                     }}
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-                {frequentlyRequested.length === 0 && <Empty></Empty>}
+                {frequentlyRequested.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
 
                 <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {frequentlyRequested.map((asset, idx) => (

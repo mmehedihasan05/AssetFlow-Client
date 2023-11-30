@@ -69,7 +69,7 @@ const AllRequests = () => {
             </div>
 
             {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-            {allRequestedAsset.length === 0 && <Empty></Empty>}
+            {allRequestedAsset.length === 0 && !isAllRequestedAssetLoading && <Empty></Empty>}
 
             {/* Assets List Loading */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
