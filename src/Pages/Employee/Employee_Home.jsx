@@ -114,7 +114,7 @@ const Employee_Home = () => {
                 {iscustomAssetsLoading && <DataLoading></DataLoading>}
 
                 {/* Assets List  */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {customAssets.map((asset, idx) => (
                         <CustomRequestEmployee
                             key={idx}
@@ -137,7 +137,7 @@ const Employee_Home = () => {
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
                 {/* Assets List  */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {pendingRequests.map((asset, idx) => (
                         <AssetCardEmployee key={idx} asset={asset}></AssetCardEmployee>
                     ))}
@@ -155,7 +155,7 @@ const Employee_Home = () => {
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
                 {/* Assets List  */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {monthlyRequests.map((asset, idx) => (
                         <AssetCardEmployee key={idx} asset={asset}></AssetCardEmployee>
                     ))}
@@ -172,7 +172,7 @@ const Employee_Home = () => {
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {frequentlyRequested.map((asset, idx) => (
                         <MinimalCard key={idx} asset={asset}></MinimalCard>
                     ))}

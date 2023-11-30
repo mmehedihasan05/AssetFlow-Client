@@ -188,7 +188,7 @@ const RequestForAsset = () => {
             {isAllAssetLoading && <DataLoading></DataLoading>}
 
             {/* Asset List */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                 {allAsset.map((asset, idx) => (
                     <div
                         key={idx}
@@ -246,7 +246,7 @@ const RequestForAsset = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <div className="space-y-6">
+                    <div className="space-y-6 px-4 md:px-0">
                         <div className="text-xl text-[--warning] font-semibold">
                             Do you really want to request for the item?
                         </div>

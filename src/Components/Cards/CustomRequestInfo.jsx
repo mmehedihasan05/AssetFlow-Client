@@ -16,7 +16,7 @@ const CustomRequestInfo = ({ asset, extra = true }) => {
             <div>
                 <h2 className="text-2xl font-semibold">{asset.productName}</h2>
             </div>
-            <div className="space-y-2 font-medium flex-1">
+            <div className=" space-y-4 md:space-y-2 font-medium flex-1">
                 <div className="flex gap-1">
                     Price :
                     <p className="font-semibold">
@@ -36,14 +36,14 @@ const CustomRequestInfo = ({ asset, extra = true }) => {
                     </p>
                 </div>
 
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-col md:flex-row">
                     Reason : <p className="font-semibold">{asset.productNotes || "-"}</p>
                 </div>
                 <div className="flex gap-1 capitalize">
                     Urgency Level :{" "}
                     <p className="font-semibold">{asset.productUrgencyLevel || "-"}</p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-col md:flex-row">
                     Delivery Deadline :{" "}
                     <p className="font-semibold">
                         {asset.productDeliveryDeadline
@@ -54,16 +54,16 @@ const CustomRequestInfo = ({ asset, extra = true }) => {
 
                 {extra && (
                     <>
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 flex-col md:flex-row">
                             Requester Name : <p className="font-semibold">{asset.userFullName}</p>
                         </div>
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 flex-col md:flex-row">
                             Requester Email : <p className="font-semibold">{asset.userEmail}</p>
                         </div>
                     </>
                 )}
 
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-col md:flex-row">
                     Requested Date:{" "}
                     <p className="font-semibold">
                         {moment.utc(asset?.requestedDate).format("DD MMM YYYY")}

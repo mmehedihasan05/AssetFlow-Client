@@ -116,7 +116,7 @@ const HR_Home = () => {
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {requestedAssets.map((asset, idx) => (
                         <AssetCardHr
                             key={idx}
@@ -137,7 +137,7 @@ const HR_Home = () => {
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {topRequested.map((asset, idx) => (
                         <MinimalCard key={idx} asset={asset}></MinimalCard>
                     ))}

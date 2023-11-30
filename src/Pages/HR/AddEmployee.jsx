@@ -169,8 +169,8 @@ const AddEmployee = () => {
                     <h2 className="">Total Asset :</h2>
                     <div className="text-base">{totalProductCount?.totalProducts || "0"} Asset</div>
                 </div>
-                <div className="p-4 bg-white shadow-lg rounded-md text-2xl font-semibold flex items-center gap-4 space-x-6">
-                    <div className="flex items-center gap-4">
+                <div className="p-4 bg-white shadow-lg rounded-md text-2xl font-semibold flex  flex-col md:flex-row items-center gap-4 space-x-6">
+                    <div className="flex items-center gap-4  flex-col md:flex-row">
                         <h2>Employee Package : </h2>
                         <div className="flex gap-4">
                             <h3 className="text-base">
@@ -192,9 +192,11 @@ const AddEmployee = () => {
             </div>
             <div className="space-y-2 ">
                 {/* Employee List Head */}
-                <div className="flex justify-between">
-                    <div className="text-xl font-semibold">Available Employees:</div>
-                    <div className="flex items-center gap-4">
+                <div className="flex justify-between flex-col md:flex-row">
+                    <div className="text-xl font-semibold text-center md:text-left">
+                        Available Employees:
+                    </div>
+                    <div className="flex flex-col md:flex-row items-center gap-4">
                         {employeesCheck.length > 0 && (
                             <>
                                 <p className="text-xl font-semibold">
@@ -219,24 +221,24 @@ const AddEmployee = () => {
                         {availableEmployee.map((employee, idx) => (
                             <div
                                 key={idx}
-                                className="flex gap-8 border-b px-2 py-4 items-center bg-white shadow-md rounded-lg hover:bg-blue-50"
+                                className="flex flex-col md:flex-row items-center gap-2 md:gap-8 border-b px-2 py-4 bg-white shadow-md rounded-lg hover:bg-blue-50"
                             >
                                 <div>
                                     <Checkbox onChange={handleCheck} value={employee.userEmail} />
                                 </div>
-                                <div className="w-[15%] flex justify-center">
+                                <div className="md:w-[15%] flex justify-center">
                                     <img
                                         src={employee?.userImage}
                                         className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
                                     />
                                 </div>
                                 <div className="flex-1">{employee?.userFullName}</div>
-                                <div className="w-[20%] flex justify-center">
+                                <div className="md:w-[20%] flex justify-center">
                                     <Tooltip title="Employee" arrow>
                                         <PersonOutlineIcon></PersonOutlineIcon>
                                     </Tooltip>
                                 </div>
-                                <div className="w-[20%] flex justify-center">
+                                <div className="md:w-[20%] flex justify-center">
                                     <Button
                                         variant="contained"
                                         startIcon={<AddCircleOutlineIcon />}

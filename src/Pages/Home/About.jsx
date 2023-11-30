@@ -4,8 +4,8 @@ const About = () => {
     return (
         <div className="custom-width bg-white space-y-4">
             <SectionTitle data={{ title: "About Us" }}></SectionTitle>
-            <div className="grid grid-cols-5 gap-4">
-                <div className="col-span-3">
+            <div className="flex flex-col-reverse lg:grid grid-cols-1 lg:grid-cols-5 gap-4">
+                <div className=" lg:col-span-3">
                     Welcome to AssetFlow, where innovation meets efficiency. In this groundbreaking
                     project, we are developing a web application designed to revolutionize asset and
                     product management for businesses. Our vision is to empower companies, large or
@@ -27,7 +27,7 @@ const About = () => {
                     productivity of businesses. Join us on this journey as we redefine the way
                     companies manage their resources, one subscription at a time.
                 </div>
-                <div className="col-span-2">
+                <div className=" lg:col-span-2">
                     <img src="/about_us.jpg" alt="" />
                 </div>
             </div>

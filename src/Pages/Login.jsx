@@ -45,7 +45,7 @@ const Login = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto space-y-8">
+        <div className="max-w-3xl mx-auto space-y-8 px-4 lg:px-0">
             <SectionTitle data={{ title: "Login", noBorder: "true" }}></SectionTitle>
 
             <div className="flex flex-col space-y-4">

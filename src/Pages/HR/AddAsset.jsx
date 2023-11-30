@@ -62,7 +62,7 @@ const AddAsset = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto space-y-8 mb-8">
+        <div className="max-w-3xl mx-auto space-y-8 mb-8 px-4 lg:px-0">
             <SectionTitle
                 data={{
                     title: "Add an Asset",

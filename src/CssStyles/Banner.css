@@ -39,6 +39,9 @@
 }
 
 @media only screen and (max-width: 426px) {
+    .banner_ {
+        padding: 0;
+    }
     .banner_ .swiper {
         height: 50vh;
     }
@@ -50,6 +53,9 @@
 }
 
 @media only screen and (max-width: 321px) {
+    .banner_ {
+        padding: 0;
+    }
     .banner_ .swiper {
         height: 35vh;
     }

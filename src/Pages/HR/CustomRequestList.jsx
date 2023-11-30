@@ -113,7 +113,7 @@ const CustomRequestList = () => {
             {iscustomAssetsLoading && <DataLoading></DataLoading>}
 
             {/* Assets List Loading */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                 {customAssets.map((asset, idx) => (
                     <div
                         key={idx}

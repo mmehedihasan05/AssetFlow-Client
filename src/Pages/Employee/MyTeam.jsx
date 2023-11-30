@@ -85,22 +85,24 @@ const MyTeam = () => {
                     {modifiedTeamMembers.map((user, idx) => (
                         <div
                             key={idx}
-                            className="flex gap-4 items-center
+                            className="flex flex-col md:flex-row gap-4 items-center
                                  border-b px-2 py-4 bg-white shadow-sm rounded-lg hover:bg-blue-50"
                         >
-                            <div className=" flex justify-center w-[15%]">
+                            <div className=" flex justify-center md:w-[15%]">
                                 <img
                                     src={user?.userImage}
                                     className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
                                 />
                             </div>
-                            <div className="flex-1 w-[40%]">{user?.userFullName}</div>
-                            <div className=" flex justify-center w-[15%] text-center">
+                            <div className="flex-1 md:w-[40%]">{user?.userFullName}</div>
+                            <div className=" flex justify-center md:w-[15%] text-center">
                                 {user?.userDob
                                     ? moment(user?.userDob).format("DD MMM YYYY")
                                     : "---"}
                             </div>
-                            <div className="w-[30%] text-center font-medium">{user?.dobStatus}</div>
+                            <div className="md:w-[30%] text-center font-medium">
+                                {user?.dobStatus}
+                            </div>
                         </div>
                     ))}
                     {modifiedTeamMembers.length === 0 && !isLoading_myTeam && (

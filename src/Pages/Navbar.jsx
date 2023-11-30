@@ -13,7 +13,12 @@ const NavBar = () => {
     const [navItem_dropdownShow, setNavItem_dropdownShow] = useState(false);
     const [profileItem_dropdownShow, setProfileItem_dropdownShow] = useState(false);
     const [currentLogo, setCurrentLogo] = useState(
-        <img className="max-w-[220px] max-h-[42px] w-auto h-auto" src="/Logo-bg-blue.png" alt="" />
+        <img
+            className="max-w-[220px] max-h-[42px] w-auto h-auto
+        "
+            src="/Logo-bg-blue.png"
+            alt=""
+        />
     );
 
     const handleNavItemDropdown = () => setNavItem_dropdownShow(!navItem_dropdownShow);

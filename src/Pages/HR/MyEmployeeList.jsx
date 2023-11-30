@@ -93,19 +93,19 @@ const MyEmployeeList = () => {
 
                         <div className="flex gap-8 items-center border-b px-2 py-4  bg-white shadow-md rounded-lg hover:bg-blue-50">
                             {/* HR */}
-                            <div className="w-[15%] flex justify-center">
+                            <div className="md:w-[15%] flex justify-center">
                                 <img
                                     src={currentUserInfo?.userImage}
                                     className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
                                 />
                             </div>
                             <div className="flex-1">{currentUserInfo?.userFullName}</div>
-                            <div className="w-[20%] flex justify-center">
+                            <div className="md:w-[20%] flex justify-center">
                                 <Tooltip title="HR" arrow>
                                     <AdminPanelSettingsIcon></AdminPanelSettingsIcon>
                                 </Tooltip>
                             </div>
-                            <div className="w-[20%] flex justify-center">
+                            <div className="md:w-[20%] flex justify-center">
                                 <Tooltip title="HR cannot be removed!" arrow>
                                     <button className="px-2">
                                         <HighlightOffIcon className="text-gray-400" disabled />
@@ -121,19 +121,19 @@ const MyEmployeeList = () => {
                                 className="flex gap-8 items-center
                                  border-b px-2 py-4 bg-white shadow-md rounded-lg hover:bg-blue-50"
                             >
-                                <div className="w-[15%] flex justify-center">
+                                <div className="md:w-[15%] flex justify-center">
                                     <img
                                         src={employee?.userImage}
                                         className="h-12 w-12 rounded-full object-cover outline outline-1  outline-offset-1 p-2px"
                                     />
                                 </div>
                                 <div className="flex-1">{employee?.userFullName}</div>
-                                <div className="w-[20%] flex justify-center">
+                                <div className="md:w-[20%] flex justify-center">
                                     <Tooltip title="Employee" arrow>
                                         <PersonOutlineIcon></PersonOutlineIcon>
                                     </Tooltip>
                                 </div>
-                                <div className="w-[20%] flex justify-center">
+                                <div className="md:w-[20%] flex justify-center">
                                     <Tooltip title="Remove from team" arrow>
                                         <button
                                             className="px-2"
