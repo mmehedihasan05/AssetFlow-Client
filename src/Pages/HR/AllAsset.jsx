@@ -104,7 +104,7 @@ sort
         let productUpdatedInfo = {
             _id: asset._id,
             productName: productName || asset?.productName,
-            productQuantity: productQuantity || asset?.productQuantity,
+            productQuantity: Number(productQuantity) || Number(asset?.productQuantity),
             productType: selectedType || asset?.productType,
         };
 

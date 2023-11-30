@@ -91,6 +91,8 @@ const CustomRequestEmployee = ({ asset, customAssets_refetch }) => {
             return;
         }
 
+        // Number(productQuantity)
+
         const productInformation = {
             _id: asset._id,
             productName: productName || asset?.productName,

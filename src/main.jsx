@@ -31,6 +31,7 @@ import MyAssets from "./Pages/Employee/MyAssets";
 import MakeCustomRequest from "./Pages/Employee/MakeCustomRequest";
 import AllRequests from "./Pages/HR/AllRequests";
 import CustomRequestList from "./Pages/HR/CustomRequestList";
+import CheckOutForm from "./hooks/CheckoutForm";
 
 const queryClient = new QueryClient();
 
@@ -133,6 +134,14 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRouteHR>
                         <Payment />
+                    </PrivateRouteHR>
+                ),
+            },
+            {
+                path: "/final_payment",
+                element: (
+                    <PrivateRouteHR>
+                        <CheckOutForm />
                     </PrivateRouteHR>
                 ),
             },

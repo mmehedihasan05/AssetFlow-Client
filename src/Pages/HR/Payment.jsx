@@ -4,10 +4,15 @@ import Packages from "../Home/Packages";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider";
+import { useContext } from "react";
+import { Navigate, Link } from "react-router-dom";
 
 const Payment = () => {
     let [packages = []] = usePackages();
     const navigate = useNavigate();
+    // const axiosSecure = useAxiosSecure();
+    let { currentUserInfo, setSelectedPackage } = useContext(AuthContext);
 
     return (
         <div className="custom-width space-y-8">
@@ -31,14 +36,17 @@ const Payment = () => {
                                 {Package.price}
                             </div>
 
-                            <div></div>
-                            <Button
-                                sx={{ margin: "0px 16px" }}
-                                variant="contained"
-                                onClick={() => navigate("")}
-                            >
-                                Buy Package
-                            </Button>
+                            <Link to="/final_payment">
+                                <Button
+                                    sx={{ margin: "0px 16px" }}
+                                    variant="contained"
+                                    onClick={() => {
+                                        setSelectedPackage(Package);
+                                    }}
+                                >
+                                    Buy Package
+                                </Button>
+                            </Link>
                         </div>
                     ))}
                 </div>

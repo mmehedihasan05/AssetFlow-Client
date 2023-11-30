@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import useAxiosSecure from "./hooks/useAxiosSecure";
 import { AuthContext } from "./AuthProvider";
 import NavBar from "./Pages/Navbar";
@@ -11,7 +11,6 @@ export const OtherContext = createContext();
 const Root = () => {
     const axiosSecure = useAxiosSecure();
     const { currentUserInfo } = useContext(AuthContext);
-
     const functionalities = {};
 
     return (

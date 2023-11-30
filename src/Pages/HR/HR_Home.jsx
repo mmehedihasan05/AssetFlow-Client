@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import DataLoading from "../../Components/DataLoading";
 import SectionTitle from "../../Components/SectionTitle";
@@ -14,7 +16,7 @@ const options = {
 };
 
 const HR_Home = () => {
-    let { currentUserInfo } = useContext(AuthContext);
+    let { currentUserInfo, isNewSignupHR, setIsNewSignupHR } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const [searchUrl, setSearchUrl] = useState(
         `/product/request/list?email=${currentUserInfo?.userEmail}`
@@ -26,6 +28,8 @@ const HR_Home = () => {
         ["Returnable Asset", 0],
         ["Non-Returnable Asset", 0],
     ]);
+
+    const navigate = useNavigate();
 
     // Requested Assets
     const {
@@ -92,6 +96,13 @@ const HR_Home = () => {
             return res.data.limitedStock;
         },
     });
+
+    useEffect(() => {
+        if (isNewSignupHR) {
+            setIsNewSignupHR(false);
+            return navigate("/payment");
+        }
+    }, []);
 
     return (
         <div className="space-y-16">

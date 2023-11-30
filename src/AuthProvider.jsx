@@ -21,6 +21,7 @@ import { createContext, useEffect, useState } from "react";
 import { app } from "./Firebase.init";
 import useAxiosSecure from "./hooks/useAxiosSecure";
 import Loading from "./Components/Loading";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 const googleProvider = new GoogleAuthProvider();
@@ -33,7 +34,8 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [purchases, setPurchases] = useState([]);
     const [theme, setTheme] = useState(localStorage.getItem("current-theme") || "dark");
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isNewSignupHR, setIsNewSignupHR] = useState(false);
+    const [selectedPackage, setSelectedPackage] = useState(null);
     const axiosSecure = useAxiosSecure();
 
     const auth = getAuth(app);
@@ -113,6 +115,10 @@ const AuthProvider = ({ children }) => {
                         });
 
                     console.log("Server Response ", registerRes);
+
+                    if (!registerRes?.userInsertResult?.userExists && userRole === "hr") {
+                        setIsNewSignupHR(true);
+                    }
 
                     if (
                         registerRes?.userInsertResult?.acknowledged ||
@@ -290,11 +296,16 @@ const AuthProvider = ({ children }) => {
         theme,
         setTheme,
 
-        isAdmin,
         currentUserInfo,
         setCurrentUserInfo,
-    };
 
+        isNewSignupHR,
+        setIsNewSignupHR,
+
+        selectedPackage,
+        setSelectedPackage,
+    };
+    // logout();
     if (loading) {
         // logout();
         return <Loading />;

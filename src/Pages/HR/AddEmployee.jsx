@@ -54,7 +54,7 @@ const AddEmployee = () => {
         },
     });
 
-    console.log(availableEmployee, totalProductCount, memberShipInfo);
+    // console.log(availableEmployee, totalProductCount, memberShipInfo);
 
     const handleManualRefetch = () => {
         refetch_availableEmployee();
@@ -167,19 +167,19 @@ const AddEmployee = () => {
             <div className="flex gap-3 flex-col text-center">
                 <div className="p-4 bg-white shadow-lg rounded-md text-2xl font-semibold flex items-center space-x-6">
                     <h2 className="">Total Asset :</h2>
-                    <div className="text-base">{totalProductCount?.totalProducts || "*"} Asset</div>
+                    <div className="text-base">{totalProductCount?.totalProducts || "0"} Asset</div>
                 </div>
                 <div className="p-4 bg-white shadow-lg rounded-md text-2xl font-semibold flex items-center gap-4 space-x-6">
                     <div className="flex items-center gap-4">
                         <h2>Employee Package : </h2>
                         <div className="flex gap-4">
                             <h3 className="text-base">
-                                Maximum {memberShipInfo?.currentMemberShipLimit || "*"} Employees
+                                Maximum {memberShipInfo?.currentMemberShipLimit || "0"} Employees
                             </h3>
                             <div className="border-2"></div>
                             <h3 className="text-base">
                                 {memberShipInfo?.currentMemberShipLimit -
-                                    memberShipInfo?.totalCurrentEmployees || "*"}{" "}
+                                    memberShipInfo?.totalCurrentEmployees || "0"}{" "}
                                 Slots Remaining
                             </h3>
                         </div>

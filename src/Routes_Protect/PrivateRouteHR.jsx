@@ -2,9 +2,13 @@ import { useContext } from "react";
 import { AuthContext } from "../AuthProvider";
 import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const PrivateRouteHR = ({ children }) => {
     const { currentUserInfo } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    // <Navigate to="/payment" replace={true} />;
 
     if (currentUserInfo?.userEmail && currentUserInfo?.userRole === "hr") {
         return <div>{children}</div>;
