@@ -6,6 +6,7 @@ import AssetCardEmployee from "../../Components/Cards/AssetCardEmployee";
 import CustomRequestEmployee from "../../Components/Cards/CustomRequestEmployee";
 import MinimalCard from "../../Components/Cards/MinimalCard";
 import DataLoading from "../../Components/DataLoading";
+import Empty from "../../Components/Empty";
 import SectionTitle from "../../Components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -103,27 +104,29 @@ const Employee_Home = () => {
     return (
         <div className="space-y-16">
             {/* My Custom Requests */}
-            <div className="space-y-8">
-                <SectionTitle
-                    data={{
-                        title: "My Custom Requests",
-                        description: "Track custom requests",
-                    }}
-                ></SectionTitle>
+            {customAssets.length !== 0 && (
+                <div className="space-y-8">
+                    <SectionTitle
+                        data={{
+                            title: "My Custom Requests",
+                            description: "Track custom requests",
+                        }}
+                    ></SectionTitle>
 
-                {iscustomAssetsLoading && <DataLoading></DataLoading>}
+                    {iscustomAssetsLoading && <DataLoading></DataLoading>}
 
-                {/* Assets List  */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {customAssets.map((asset, idx) => (
-                        <CustomRequestEmployee
-                            key={idx}
-                            asset={asset}
-                            customAssets_refetch={customAssets_refetch}
-                        ></CustomRequestEmployee>
-                    ))}
+                    {/* Assets List  */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {customAssets.map((asset, idx) => (
+                            <CustomRequestEmployee
+                                key={idx}
+                                asset={asset}
+                                customAssets_refetch={customAssets_refetch}
+                            ></CustomRequestEmployee>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* My pending requests */}
             <div className="space-y-8">
@@ -135,6 +138,7 @@ const Employee_Home = () => {
                 ></SectionTitle>
 
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+                {pendingRequests.length === 0 && <Empty></Empty>}
 
                 {/* Assets List  */}
                 <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
@@ -154,6 +158,8 @@ const Employee_Home = () => {
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
 
+                {monthlyRequests.length === 0 && <Empty></Empty>}
+
                 {/* Assets List  */}
                 <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {monthlyRequests.map((asset, idx) => (
@@ -171,6 +177,7 @@ const Employee_Home = () => {
                     }}
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+                {frequentlyRequested.length === 0 && <Empty></Empty>}
 
                 <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {frequentlyRequested.map((asset, idx) => (

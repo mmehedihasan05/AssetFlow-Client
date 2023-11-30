@@ -10,6 +10,7 @@ import moment from "moment";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 import AssetCardHr from "../../Components/Cards/AssetCardHr";
+import Empty from "../../Components/Empty";
 
 const AllRequests = () => {
     let { currentUserInfo } = useContext(AuthContext);
@@ -68,6 +69,7 @@ const AllRequests = () => {
             </div>
 
             {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+            {allRequestedAsset.length === 0 && <Empty></Empty>}
 
             {/* Assets List Loading */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

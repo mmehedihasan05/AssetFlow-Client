@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import Print from "../../Components/Print";
 import { Helmet } from "react-helmet-async";
 import AssetCardEmployee from "../../Components/Cards/AssetCardEmployee";
+import Empty from "../../Components/Empty";
 
 const style = {
     position: "absolute",
@@ -106,7 +107,7 @@ const MyAssets = () => {
         <div className="custom-width  space-y-8">
             <SectionTitle
                 data={{
-                    title: "My Requested Assets",
+                    title: "My Assets",
                     description: "All requested items by you",
                     noBorder: false,
                 }}
@@ -162,6 +163,7 @@ const MyAssets = () => {
             </div>
 
             {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+            {allRequestedAsset.length === 0 && <Empty></Empty>}
 
             {/* Assets List Loading */}
             <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">

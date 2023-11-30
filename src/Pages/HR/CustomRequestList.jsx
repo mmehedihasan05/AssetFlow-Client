@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../AuthProvider";
 import AssetCardHr from "../../Components/Cards/AssetCardHr";
@@ -11,12 +11,15 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import toast from "react-hot-toast";
 import CustomRequestInfo from "../../Components/Cards/CustomRequestInfo";
+import Empty from "../../Components/Empty";
 
-const CustomRequestList = () => {
+const CustomRequestList = ({ title = null, description = null, onlyPending = false }) => {
     let { currentUserInfo } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
+    const [customAssets, setCustomAssets] = useState([]);
+
     const {
-        data: customAssets = [],
+        data: customAssets_ = [],
         isLoading: iscustomAssetsLoading,
         refetch: customAssets_refetch,
     } = useQuery({
@@ -26,11 +29,16 @@ const CustomRequestList = () => {
             const res = await axiosSecure.get(
                 `/custom-product/list?email=${currentUserInfo?.userEmail}`
             );
+
+            if (onlyPending) {
+                let temp = res.data.filter((asset) => asset.approvalStatus === "pending");
+                setCustomAssets(temp);
+            } else {
+                setCustomAssets(res.data);
+            }
             return res.data;
         },
     });
-
-    console.log(customAssets);
 
     const handleApprove = (asset) => {
         console.log(asset);
@@ -101,9 +109,9 @@ const CustomRequestList = () => {
         <div className="custom-width space-y-8">
             <SectionTitle
                 data={{
-                    title: "Custom requests",
+                    title: title || "Custom requests",
                     noBorder: false,
-                    description: (
+                    description: description || (
                         <>
                             Custom assets requested <br /> by your employees
                         </>
@@ -111,6 +119,8 @@ const CustomRequestList = () => {
                 }}
             ></SectionTitle>
             {iscustomAssetsLoading && <DataLoading></DataLoading>}
+
+            {customAssets_.length === 0 && <Empty></Empty>}
 
             {/* Assets List Loading */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">

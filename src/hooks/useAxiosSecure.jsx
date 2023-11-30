@@ -11,7 +11,7 @@ const useAxiosSecure = () => {
     const all = useContext(AuthContext);
 
     let axiosSecure = axios.create({
-        baseURL: "http://localhost:5000",
+        baseURL: "https://a12-assetflow-backend.vercel.app",
         withCredentials: true,
     });
 

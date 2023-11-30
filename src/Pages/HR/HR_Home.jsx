@@ -10,6 +10,9 @@ import { Chart } from "react-google-charts";
 import AssetCardHr from "../../Components/Cards/AssetCardHr";
 import MinimalCard from "../../Components/Cards/MinimalCard";
 import LimitedStockViewer from "../../Components/LimitedStockViewer";
+import Empty from "../../Components/Empty";
+import toast from "react-hot-toast";
+import CustomRequestList from "./CustomRequestList";
 
 const options = {
     title: "Asset Request Comparision",
@@ -24,9 +27,15 @@ const HR_Home = () => {
     const [requestedAssets, setRequestedAssets] = useState([]);
     const [topRequested, setTopRequested] = useState([]);
     const [assetTypeData, setAssetTypeData] = useState([
-        ["Task", "Hours per Day"],
+        ["Type", "Total"],
         ["Returnable Asset", 0],
         ["Non-Returnable Asset", 0],
+    ]);
+
+    const [requestTypeData, setRequestTypeData] = useState([
+        ["Request", "Total"],
+        ["Company Provided Assets", 0],
+        ["Custom Requested Assets", 0],
     ]);
 
     const navigate = useNavigate();
@@ -42,7 +51,10 @@ const HR_Home = () => {
             const res = await axiosSecure.get(searchUrl);
             let assets = res.data;
             // Pending requests (max: 5 items)
-            setRequestedAssets(assets.reverse().slice(0, 5));
+            let tempPendingRequest = assets
+                .reverse()
+                .filter((asset) => asset.approvalStatus === "pending");
+            setRequestedAssets(tempPendingRequest.slice(0, 5));
 
             // Top most requested items (max: 4 items)
             let chekedProductIds = [];
@@ -97,9 +109,31 @@ const HR_Home = () => {
         },
     });
 
+    // Total Custom Requests
+    const { data: customRequestsCount = 0 } = useQuery({
+        queryKey: ["customRequestsCount", currentUserInfo?.userEmail],
+        queryFn: async () => {
+            const res = await axiosSecure.get(
+                `/custom-product/list?email=${currentUserInfo?.userEmail}`
+            );
+
+            return res.data.length;
+        },
+    });
+
+    useEffect(() => {
+        setRequestTypeData([
+            ["Request", "Total"],
+            ["Company Provided Assets", allRequestedAsset.length],
+            ["Custom Requested Assets", customRequestsCount],
+        ]);
+    }, [allRequestedAsset, customRequestsCount]);
+
     useEffect(() => {
         if (isNewSignupHR) {
             setIsNewSignupHR(false);
+            return navigate("/payment");
+        } else if (currentUserInfo?.currentMemberShipLimit === 0) {
             return navigate("/payment");
         }
     }, []);
@@ -115,7 +149,7 @@ const HR_Home = () => {
                     }}
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
-
+                {requestedAssets.length === 0 && <Empty></Empty>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {requestedAssets.map((asset, idx) => (
                         <AssetCardHr
@@ -127,6 +161,13 @@ const HR_Home = () => {
                 </div>
             </div>
 
+            {/* Custom Pending Request */}
+            <CustomRequestList
+                title="Pending Custom Requests"
+                description="Custom Pending Requests from your employees"
+                onlyPending={true}
+            ></CustomRequestList>
+
             {/* Top requested items */}
             <div className="space-y-8">
                 <SectionTitle
@@ -136,6 +177,7 @@ const HR_Home = () => {
                     }}
                 ></SectionTitle>
                 {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+                {topRequested.length === 0 && <Empty></Empty>}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {topRequested.map((asset, idx) => (
@@ -153,15 +195,16 @@ const HR_Home = () => {
                     }}
                 ></SectionTitle>
                 {islimitedStockLoading && <DataLoading></DataLoading>}
+                {limitedStock.length === 0 && <Empty></Empty>}
 
                 <LimitedStockViewer limitedStock={limitedStock}></LimitedStockViewer>
             </div>
 
-            {/* Asset Request Comparison Pie Chart */}
+            {/* Asset Request Comparison Pie Chart : Returnable vs Non Returnable */}
             <div className="space-y-8">
                 <SectionTitle
                     data={{
-                        title: "Asset Request Comparision",
+                        title: "Asset Types Overview",
                         description: (
                             <>
                                 Visualizing Returnable vs Non-returnable <br /> Asset Requests in
@@ -170,13 +213,51 @@ const HR_Home = () => {
                         ),
                     }}
                 ></SectionTitle>
-                {isAllRequestedAssetLoading ? (
-                    <DataLoading></DataLoading>
+
+                {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+
+                {allRequestedAsset.length === 0 ? (
+                    <Empty></Empty>
                 ) : (
                     <Chart
                         chartType="PieChart"
                         data={assetTypeData}
-                        options={options}
+                        options={{
+                            title: "Asset Type Comparision",
+                        }}
+                        width={"100%"}
+                        height={"400px"}
+                    />
+                )}
+            </div>
+
+            {/* Asset Request Comparison Pie Chart : Company Provided Vs Custom */}
+            <div className="space-y-8">
+                <SectionTitle
+                    data={{
+                        title: "Asset Request Comparison",
+                        description: (
+                            <>
+                                Comparing Custom vs. Company-Provided <br /> Asset Requests in
+                                Percentage
+                            </>
+                        ),
+                    }}
+                ></SectionTitle>
+
+                {isAllRequestedAssetLoading && <DataLoading></DataLoading>}
+
+                {allRequestedAsset.length === 0 ? (
+                    <Empty></Empty>
+                ) : (
+                    <Chart
+                        chartType="PieChart"
+                        data={requestTypeData}
+                        options={{
+                            title: "Asset Request Comparision",
+                            pieStartAngle: 100,
+                            colors: ["#3D30A2", "#B15EFF", "#FBBC05", "#EA4335"],
+                        }}
                         width={"100%"}
                         height={"400px"}
                     />

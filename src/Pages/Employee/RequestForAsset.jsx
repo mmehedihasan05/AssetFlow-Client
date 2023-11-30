@@ -30,6 +30,7 @@ const style = {
     borderRadius: 1,
 };
 import { Helmet } from "react-helmet-async";
+import Empty from "../../Components/Empty";
 const RequestForAsset = () => {
     let { currentUserInfo } = useContext(AuthContext);
     const [title_Filter, setTitle_Filter] = useState(null);
@@ -186,6 +187,7 @@ const RequestForAsset = () => {
             </div>
 
             {isAllAssetLoading && <DataLoading></DataLoading>}
+            {allAsset.length === 0 && <Empty></Empty>}
 
             {/* Asset List */}
             <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">

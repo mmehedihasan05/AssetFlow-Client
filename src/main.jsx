@@ -32,6 +32,7 @@ import MakeCustomRequest from "./Pages/Employee/MakeCustomRequest";
 import AllRequests from "./Pages/HR/AllRequests";
 import CustomRequestList from "./Pages/HR/CustomRequestList";
 import CheckOutForm from "./hooks/CheckoutForm";
+import MakePaymentRedirect from "./Pages/HR/MakePaymentRedirect";
 
 const queryClient = new QueryClient();
 
@@ -85,7 +86,9 @@ const router = createBrowserRouter([
                 path: "/asset_list",
                 element: (
                     <PrivateRouteHR>
-                        <AllAsset />
+                        <MakePaymentRedirect>
+                            <AllAsset />
+                        </MakePaymentRedirect>
                     </PrivateRouteHR>
                 ),
             },
@@ -93,7 +96,9 @@ const router = createBrowserRouter([
                 path: "/add_asset",
                 element: (
                     <PrivateRouteHR>
-                        <AddAsset />
+                        <MakePaymentRedirect>
+                            <AddAsset />
+                        </MakePaymentRedirect>
                     </PrivateRouteHR>
                 ),
             },
@@ -101,7 +106,9 @@ const router = createBrowserRouter([
                 path: "/custom_requests_list",
                 element: (
                     <PrivateRouteHR>
-                        <CustomRequestList />
+                        <MakePaymentRedirect>
+                            <CustomRequestList />
+                        </MakePaymentRedirect>
                     </PrivateRouteHR>
                 ),
             },
@@ -109,7 +116,9 @@ const router = createBrowserRouter([
                 path: "/all_requests",
                 element: (
                     <PrivateRouteHR>
-                        <AllRequests />
+                        <MakePaymentRedirect>
+                            <AllRequests />
+                        </MakePaymentRedirect>
                     </PrivateRouteHR>
                 ),
             },
@@ -117,7 +126,9 @@ const router = createBrowserRouter([
                 path: "/my_employee_list",
                 element: (
                     <PrivateRouteHR>
-                        <MyEmployeeList />
+                        <MakePaymentRedirect>
+                            <MyEmployeeList />
+                        </MakePaymentRedirect>
                     </PrivateRouteHR>
                 ),
             },
@@ -125,7 +136,9 @@ const router = createBrowserRouter([
                 path: "/add_employee",
                 element: (
                     <PrivateRouteHR>
-                        <AddEmployee />
+                        <MakePaymentRedirect>
+                            <AddEmployee />
+                        </MakePaymentRedirect>
                     </PrivateRouteHR>
                 ),
             },

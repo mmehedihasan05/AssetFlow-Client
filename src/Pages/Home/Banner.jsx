@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../../CssStyles/Banner.css";
-import { Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const Banner = () => {
                     disableOnInteraction: false,
                 }}
                 navigation={true}
-                modules={[Pagination, Navigation]}
+                modules={[Pagination, Navigation, Autoplay]}
                 className="mySwiper rounded-lg"
             >
                 <div>

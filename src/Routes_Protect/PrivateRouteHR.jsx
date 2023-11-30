@@ -9,6 +9,7 @@ const PrivateRouteHR = ({ children }) => {
     const navigate = useNavigate();
 
     // <Navigate to="/payment" replace={true} />;
+    // console.log(currentUserInfo);
 
     if (currentUserInfo?.userEmail && currentUserInfo?.userRole === "hr") {
         return <div>{children}</div>;
