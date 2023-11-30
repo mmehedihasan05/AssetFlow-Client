@@ -3,6 +3,7 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import AssetCardEmployee from "../../Components/Cards/AssetCardEmployee";
+import CustomRequestEmployee from "../../Components/Cards/CustomRequestEmployee";
 import MinimalCard from "../../Components/Cards/MinimalCard";
 import DataLoading from "../../Components/DataLoading";
 import SectionTitle from "../../Components/SectionTitle";
@@ -80,13 +81,49 @@ const Employee_Home = () => {
         },
     });
 
+    // Custom Requests
+    const {
+        data: customAssets = [],
+        isLoading: iscustomAssetsLoading,
+        refetch: customAssets_refetch,
+    } = useQuery({
+        queryKey: ["customRequestList", currentUserInfo?.userEmail],
+        queryFn: async () => {
+            // ?email=${currentUser?.email}
+            const res = await axiosSecure.get(
+                `/custom-product/list?email=${currentUserInfo?.userEmail}`
+            );
+            return res.data;
+        },
+    });
+
     // console.log("frequentlyRequested 2", allRequestedAsset);
     console.log("frequentlyRequested", frequentlyRequested);
 
     return (
         <div className="space-y-16">
             {/* My Custom Requests */}
-            {/* <div></div> */}
+            <div className="space-y-8">
+                <SectionTitle
+                    data={{
+                        title: "My Custom Requests",
+                        description: "Track custom requests",
+                    }}
+                ></SectionTitle>
+
+                {iscustomAssetsLoading && <DataLoading></DataLoading>}
+
+                {/* Assets List  */}
+                <div className="grid grid-cols-3 gap-4">
+                    {customAssets.map((asset, idx) => (
+                        <CustomRequestEmployee
+                            key={idx}
+                            asset={asset}
+                            customAssets_refetch={customAssets_refetch}
+                        ></CustomRequestEmployee>
+                    ))}
+                </div>
+            </div>
 
             {/* My pending requests */}
             <div className="space-y-8">
