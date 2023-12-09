@@ -75,7 +75,7 @@ const AddEmployee = () => {
     };
 
     useEffect(() => {
-        console.log(employeesCheck);
+        // console.log(employeesCheck);
     }, [employeesCheck]);
 
     /*
@@ -134,7 +134,7 @@ const AddEmployee = () => {
                     employeesToBook: employeesCheck,
                 })
                 .then((response) => {
-                    console.log("multiUserBook", response);
+                    // console.log("multiUserBook", response);
 
                     handleManualRefetch();
                     setEmployeesCheck([]);

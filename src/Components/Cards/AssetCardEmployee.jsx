@@ -14,7 +14,7 @@ const AssetCardEmployee = ({ asset, allRequestedAsset_refetch, button = false })
         // /product/request/cancel?email=${currentUserInfo?.userEmail}&targetedAssetId={asset._id}
 
         let assetId = asset._id;
-        console.log(asset);
+        // console.log(asset);
         return toast.promise(
             axiosSecure
                 .delete(

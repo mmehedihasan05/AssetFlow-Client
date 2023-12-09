@@ -72,7 +72,7 @@ const Register_Employee = () => {
             userCompanyName: null,
         };
 
-        console.log(data);
+        // console.log(data);
         userCreate(data)
             .then((response) => {
                 // Reset form after successfull register

@@ -85,7 +85,7 @@ const MakeCustomRequest = () => {
             approvalStatus: "pending",
         };
 
-        console.log(productInformation);
+        // console.log(productInformation);
 
         return toast.promise(
             axiosSecure

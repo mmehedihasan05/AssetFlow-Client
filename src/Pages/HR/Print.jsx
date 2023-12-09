@@ -57,16 +57,16 @@ userFullName,
     const handlePrint_ = useReactToPrint({
         content: () => componentRef.current,
     });
-    console.log("Print page", {
-        currentWorkingCompanyImage,
-        currentWorkingCompanyName,
-        productName,
-        productId,
-        productType,
-        approvalDate,
-        userFullName,
-        userEmail,
-    });
+    // console.log("Print page", {
+    //     currentWorkingCompanyImage,
+    //     currentWorkingCompanyName,
+    //     productName,
+    //     productId,
+    //     productType,
+    //     approvalDate,
+    //     userFullName,
+    //     userEmail,
+    // });
     const currentDate = new Date().toLocaleString();
 
     return (

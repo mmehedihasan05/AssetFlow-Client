@@ -25,7 +25,7 @@ const NavBar = () => {
     const handleProfileDropdown = () => setProfileItem_dropdownShow(!profileItem_dropdownShow);
 
     useEffect(() => {
-        console.log("Current user Navbar", currentUserInfo);
+        // console.log("Current user Navbar", currentUserInfo);
         if (
             currentUserInfo?.userRole === "employee" &&
             currentUserInfo?.currentWorkingCompanyImage

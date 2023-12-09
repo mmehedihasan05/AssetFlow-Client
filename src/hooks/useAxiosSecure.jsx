@@ -22,7 +22,7 @@ const useAxiosSecure = () => {
             },
             (error) => {
                 if (error.response.status === 401 || error.response.status === 403) {
-                    console.log("Called from secure", all?.currentUser);
+                    // console.log("Called from secure", all?.currentUser);
                     all?.logout()
                         .then((response) => {
                             toast.error("Unauthorized Access! Logged Out.");

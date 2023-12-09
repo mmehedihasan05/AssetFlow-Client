@@ -36,7 +36,7 @@ const Employee_Home = () => {
 
             // Pending request
             let tempPending = assets.filter((asset) => asset.approvalStatus === "pending");
-            console.log(tempPending);
+            // console.log(tempPending);
             setpendingRequests(tempPending);
 
             // Monthly requests
@@ -99,7 +99,7 @@ const Employee_Home = () => {
     });
 
     // console.log("frequentlyRequested 2", allRequestedAsset);
-    console.log("frequentlyRequested", frequentlyRequested);
+    // console.log("frequentlyRequested", frequentlyRequested);
 
     return (
         <div className="space-y-16">

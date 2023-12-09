@@ -91,7 +91,7 @@ const AuthProvider = ({ children }) => {
         return toast.promise(
             createUserWithEmailAndPassword(auth, userEmail, userPassword)
                 .then(async (userCredential) => {
-                    console.log(userCredential);
+                    // console.log(userCredential);
                     const userInformation = {
                         userFullName,
                         userEmail,
@@ -103,7 +103,7 @@ const AuthProvider = ({ children }) => {
                         userId: userCredential?.user?.uid,
                         userSignUpMethod: "email_pass",
                     };
-                    console.log("info to post ", userInformation);
+                    // console.log("info to post ", userInformation);
 
                     // user entry
                     let registerRes = await axiosSecure
@@ -115,7 +115,7 @@ const AuthProvider = ({ children }) => {
                             console.log("error from userRegister", error);
                         });
 
-                    console.log("Server Response ", registerRes);
+                    // console.log("Server Response ", registerRes);
 
                     if (!registerRes?.userInsertResult?.userExists && userRole === "hr") {
                         setIsNewSignupHR(true);

@@ -40,7 +40,7 @@ const Login = () => {
             userEmail: emailInput,
             userPassword: passwordInput,
         };
-        console.log(data);
+        // console.log(data);
         login(data);
     };
 

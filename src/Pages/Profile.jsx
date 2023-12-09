@@ -34,7 +34,7 @@ const Profile = () => {
                     email: currentUserInfo?.userEmail,
                 })
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     if (response.data?.updatedEmployeeData_result?.acknowledged) {
                         setCurrentUserInfo(response.data?.userInformation);
                         return <b>Profile information updated Successfully.</b>;

@@ -10,7 +10,7 @@ const AssetCardHr = ({ asset, allAssetRefetch }) => {
     const axiosSecure = useAxiosSecure();
 
     const handleApprove = (asset) => {
-        console.log(asset);
+        // console.log(asset);
         // _id: asset._id, eta product request id
 
         return toast.promise(

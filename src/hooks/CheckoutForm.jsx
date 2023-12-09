@@ -27,7 +27,7 @@ const CheckoutForm = () => {
     let [price, setPrice] = useState(null);
 
     useEffect(() => {
-        console.log("selectedPackage", selectedPackage);
+        // console.log("selectedPackage", selectedPackage);
         if (selectedPackage) {
             setPrice(selectedPackage.price);
 
@@ -37,7 +37,7 @@ const CheckoutForm = () => {
                     email: currentUserInfo?.userEmail,
                 })
                 .then((res) => {
-                    console.log(res.data.clientSecret);
+                    // console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret);
                 });
         }
@@ -77,7 +77,7 @@ const CheckoutForm = () => {
             console.log("[PaymentMethod]", paymentMethod);
         }
 
-        console.log("card", card);
+        // console.log("card", card);
         // Confirm payment
         const { paymentIntent, error: cardConfirmError } = await stripe.confirmCardPayment(
             clientSecret,
@@ -96,7 +96,7 @@ const CheckoutForm = () => {
             toast.error(cardConfirmError.code);
             console.log("cardConfirmError", cardConfirmError);
         } else if (paymentIntent.status === "succeeded") {
-            console.log("paymentIntent", paymentIntent);
+            // console.log("paymentIntent", paymentIntent);
 
             const paymentInfo = {
                 transactionId: paymentIntent.id,
@@ -115,8 +115,8 @@ const CheckoutForm = () => {
                     email: currentUserInfo?.userEmail,
                 })
                 .then((response) => {
-                    console.log(response.data?.updatedPaymentData_result);
-                    console.log(response.data?.userInformation);
+                    // console.log(response.data?.updatedPaymentData_result);
+                    // console.log(response.data?.userInformation);
 
                     setSelectedPackage(null);
                     setCurrentUserInfo(response.data?.userInformation);

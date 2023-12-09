@@ -104,7 +104,7 @@ const Register_HR = () => {
             userCompanyLogo: companyImageReponse?.data?.url || null,
             userCompanyName: companyName || null,
         };
-        console.log(data);
+        // console.log(data);
         userCreate(data)
             .then((response) => {
                 // Reset form after successfull register

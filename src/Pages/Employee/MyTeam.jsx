@@ -34,7 +34,7 @@ const MyTeam = () => {
     });
 
     useEffect(() => {
-        console.log(myTeam);
+        // console.log(myTeam);
         const currentDate = new Date().toISOString().split("T")[0];
         const currentDate_Month = currentDate.split("-")[1];
         const currentDate_day = currentDate.split("-")[2];
@@ -64,7 +64,7 @@ const MyTeam = () => {
         setModifiedTeamMembers(tempTeamMembers);
     }, [myTeam]);
 
-    console.log(myTeam);
+    // console.log(myTeam);
 
     return (
         <div className="custom-width   md:max-w-full lg:max-w-[75%] mx-auto px-6 space-y-12">

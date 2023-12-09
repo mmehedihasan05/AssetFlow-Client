@@ -58,8 +58,6 @@ const CustomRequestEmployee = ({ asset, customAssets_refetch }) => {
     ];
 
     const handleCustomUpdate = async () => {
-        console.log("hiiiii", asset);
-
         let productImageReponse;
         if (productImage) {
             let toastId = toast.loading("Uploading Image...");
@@ -104,7 +102,7 @@ const CustomRequestEmployee = ({ asset, customAssets_refetch }) => {
             productImage: productImageReponse?.data?.url || asset?.productImage,
         };
 
-        console.log(productInformation);
+        // console.log(productInformation);
 
         return toast.promise(
             axiosSecure
